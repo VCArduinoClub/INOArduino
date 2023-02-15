@@ -1,4 +1,4 @@
-#InoArduino
+# InoArduino
 
 An arduino learning platform that teaches computer engineering through the arduino microcontroller to students paired with a customized kit. 
 
