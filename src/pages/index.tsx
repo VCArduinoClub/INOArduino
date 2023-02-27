@@ -6,7 +6,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { api } from "../utils/api";
 
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  const test = api.example.hello.useQuery({ text: "from tRPC" });
 
   return (
     <>
@@ -20,8 +20,9 @@ const Home: NextPage = () => {
           <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
             <span className="text-[hsl(280,100%,70%)]">InoArduino</span>
           </h1>
-      
-          <h3><span className="text-purple-300">Home Page Content</span></h3>
+          <div>
+           Welcome to the InoArduino App! In this guide, we will teach you ALL the basics of the Arduino. The kit comes with everything you need to follow along with this guide and learn how to use an Arduino. 
+          </div> 
      
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
             <Link
@@ -31,30 +32,27 @@ const Home: NextPage = () => {
             >
               <h3 className="text-2xl font-bold"> Introduction →</h3>
               <div className="text-lg">
-                Just the basics - Everything you need to know to set up your
-                database and authentication.
+                Just the basics 
               </div>
             </Link>
             <Link
               className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-              href="https://create.t3.gg/en/introduction"
+              href="/lesson1"
               target="_blank"
             >
               <h3 className="text-2xl font-bold"> Lesson 1 →</h3>
               <div className="text-lg">
-                Learn more about Create T3 App, the libraries it uses, and how
-                to deploy it.
+                Learn more about arduino
               </div>
             </Link>
             <Link
               className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-              href="https://create.t3.gg/en/usage/first-steps"
+              href="/lesson2"
               target="_blank"
             >
               <h3 className="text-2xl font-bold">Lesson 2 →</h3>
               <div className="text-lg">
-                Just the basics - Everything you need to know to set up your
-                database and authentication.
+                Learn more about arduino
               </div>
             </Link>
             <Link
@@ -64,15 +62,14 @@ const Home: NextPage = () => {
             >
               <h3 className="text-2xl font-bold"> Lesson 3 →</h3>
               <div className="text-lg">
-                Just the basics - Everything you need to know to set up your
-                database and authentication.
+                learn more about arduino
               </div>
             </Link>
           </div>
           <div className="flex flex-col items-center gap-2">
-            {/* <p className="text-2xl text-white">
-              {hello.data ? hello.data.greeting : "Loading tRPC query..."}
-            </p> */}
+            {/* {<p className="text-2xl text-white"> */}
+              {/* {test.data ? test.data.greeting : "Loading tRPC query..."} */}
+            {/* </p> } */}
             <AuthShowcase />
           </div>
         </div>
