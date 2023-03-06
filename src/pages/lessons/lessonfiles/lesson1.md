@@ -1,0 +1,24 @@
+# Lesson 1 - Basics 
+
+## Overview
+
+What you will learn:
+- What is an Arduino?
+- How do you use one?
+- How do you program one?
+- What are its components?
+- What does it do?
+- Why is it important?
+- Arduino IDE
+- How do you load this up?
+- C++ code, what is this?
+- What is `Serial.println()`?
+- You will make your own "hello world" code with the Arduino at the end.
+
+## Lesson
+
+The Arduino is a tiny computer that takes instructions from your computer and sends them to devices you connect to the Arduino. You can connect many types of devices to an Arduino, including LEDs, sensors, and input devices such as buttons. You can even attach an LED screen to display things!
+
+### Pins/Components
+
+There are many different Arduino boards, but we are focused on the Arduino UNO, the board in your kit.
