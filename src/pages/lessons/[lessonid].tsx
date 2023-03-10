@@ -41,7 +41,7 @@ const components = {
   Head,
 }
 
-export default function PostPage({ source }) {
+export default function PostPage({ source: any }) {
   return (
     <Layout>
       <div className="post-header" hidden>
