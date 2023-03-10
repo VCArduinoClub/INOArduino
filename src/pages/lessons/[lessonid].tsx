@@ -41,7 +41,7 @@ const components = {
   Head,
 }
 
-export default function PostPage({ source: any }) {
+export default function PostPage({ source }: {source: any}): JSX.Element {
   return (
     <Layout>
       <div className="post-header" hidden>
@@ -68,6 +68,7 @@ export default function PostPage({ source: any }) {
   )
 }
 
+// eslint-disable-next-line @typescript-eslint/require-await
 export const getStaticPaths = async () => {
   const paths = postFilePaths
     // Remove file extensions for page paths
@@ -82,7 +83,8 @@ export const getStaticPaths = async () => {
 }
 
 
-export const getStaticProps = async ({ params }) => {
+export const getStaticProps = async ({ params } : { params: any}) => {
+  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
   const postFilePath = path.join(POSTS_PATH, `${params.lessonid}.mdx`)
   const source = fs.readFileSync(postFilePath)
 
