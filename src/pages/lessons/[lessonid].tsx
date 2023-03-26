@@ -10,7 +10,7 @@ import Layout from '../../components/Layout'
 import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils'
 
 // Custom components/renderers to pass to MDX.
-// Since the MDX files aren't loaded by webpack, they have no knowledge of how
+// Since the MDX files aren't loaded by webpack (or SWC, now.), they have no knowledge of how
 // to handle import statements. Instead, you must include components in scope
 // here.
 
@@ -41,12 +41,15 @@ const components = {
   Head,
 }
 
-export default function PostPage({ source }: {source: any}): JSX.Element {
+export default function PostPage({ source, frontMatter }: {source: any, frontMatter: { title: string, description: string}}): JSX.Element {
   return (
     <Layout>
       <div className="post-header" hidden>
-        <h1>Header</h1>
-        <p> Lesson 2 </p>
+        <Heading as="h1" size="2xl">
+          {frontMatter.title}
+        </Heading>
+        <Text className="description">{frontMatter.description}</Text>
+        <Divider />
       </div>
       <main>
         <MDXRemote {...source} components={components} />
