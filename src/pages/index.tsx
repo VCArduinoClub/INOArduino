@@ -1,4 +1,4 @@
-import { NextPageContext, type NextPage } from "next";
+import { GetStaticProps, NextPageContext, type NextPage } from "next";
 import Head from "next/head";
 import { signIn, signOut, useSession } from "next-auth/react";
 import fs from 'fs';
@@ -33,28 +33,17 @@ const Home: NextPage<HomeProps> = ({lessons}) => {
           <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
             <span className="text-[hsl(280,100%,70%)]">InoArduino</span>
           </h1>
-          <div className="text-white font-light text-xl">
-           Welcome to the InoArduino App! In this guide, we will teach you ALL the foundations of the Arduino. The kit comes with everything you need to follow along with this guide and learn how to use an Arduino.
-           You will learn all about the Arduino UNO, the breadboard, LED, resistor, button, sensors, wires, circuitry, and more! 
- 
-          </div> 
-     
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
             {
               lessons.map((lesson) => (
                 <HomeLink 
                   path={lesson.path.replace('.mdx', '')}
                   title={lesson.title}
-                  description={lesson.description}>
+                  description={lesson.description}
+                  key={lesson.path.replace('.mdx', '')}>
                 </HomeLink>
               ))
             }
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            {/* {<p className="text-2xl text-white"> */}
-              {/* {test.data ? test.data.greeting : "Loading tRPC query..."} */}
-            {/* </p> } */}
-            <AuthShowcase />
           </div>
         </div>
       </main>
@@ -88,9 +77,9 @@ const AuthShowcase: React.FC = () => {
   );
 };
 
-export const getStaticProps = async({context} : {context: NextPageContext}) => {
+export const getStaticProps: GetStaticProps = async() => {
 
-  const lessonInfo : Lesson[] = 
+  const lessonInfo = 
   postFilePaths.map((lesson_path) => {
     const postFilePath = path.join(POSTS_PATH, `${lesson_path}`);
     const source = fs.readFileSync(postFilePath);
