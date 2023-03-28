@@ -57,7 +57,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           <HStack spacing={8} alignItems={'center'}>
             <Box>
               <Link href="/">
-                Logo
+                Home
               </Link>
             </Box>
             <Menu>
