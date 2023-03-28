@@ -15,8 +15,13 @@ import {
   useDisclosure,
   useColorModeValue,
   Stack,
+  useColorMode,
+  Spacer
+
+
 } from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons';
+
+import { MoonIcon, SunIcon, HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons';
 
 const Links = ['Dashboard', 'Simulator', 'Teams', 'Profile', 'Settings'];
 
@@ -34,8 +39,9 @@ const NavLink = ({ children }: { children: ReactNode }) => (
   </Link>
 );
 
-export default function Layout({children}: {children: ReactNode}) {
+export default function Layout({ children }: { children: ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <>
@@ -55,16 +61,16 @@ export default function Layout({children}: {children: ReactNode}) {
               </Link>
             </Box>
             <Menu>
-          <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-            Lessons
-          </MenuButton>
-          <MenuList>
-            <MenuItem>Lesson 1</MenuItem>
-            <MenuItem>Lesson 2</MenuItem>
-            <MenuItem>Lesson 3</MenuItem>
-            <MenuItem>Lesson 4</MenuItem>
-          </MenuList>
-        </Menu>
+              <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                Lessons
+              </MenuButton>
+              <MenuList>
+                <MenuItem ><a href="/lessons/lesson1">Lesson 1</a></MenuItem>
+                <MenuItem>Lesson 2</MenuItem>
+                <MenuItem>Lesson 3</MenuItem>
+                <MenuItem>Lesson 4</MenuItem>
+              </MenuList>
+            </Menu>
             <HStack
               as={'nav'}
               display={{ base: 'none', md: 'flex' }}>
@@ -72,9 +78,17 @@ export default function Layout({children}: {children: ReactNode}) {
                 <NavLink key={link}>{link}</NavLink>
               ))}
             </HStack>
+
           </HStack>
+
           <Flex alignItems={'center'}>
+            <Box px={2}>
+              <Button onClick={toggleColorMode}>
+                {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+              </Button>
+            </Box>
             <Menu>
+
               <MenuButton
                 as={Button}
                 rounded={'full'}
@@ -84,7 +98,7 @@ export default function Layout({children}: {children: ReactNode}) {
                 <Avatar
                   size={'sm'}
                   src={
-                    'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                    'https://avatars.githubusercontent.com/u/64346567?v=4'
                   }
                 />
               </MenuButton>
