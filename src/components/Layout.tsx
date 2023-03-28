@@ -49,7 +49,11 @@ export default function Layout({children}: {children: ReactNode}) {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={'center'}>
-            <Box>Logo</Box>
+            <Box>
+              <Link href="/">
+                Logo
+              </Link>
+            </Box>
             <Menu>
           <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
             Lessons

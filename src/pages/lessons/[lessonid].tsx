@@ -15,44 +15,44 @@ import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils'
 // here.
 
 //https://github.com/bogadrian/nextjs-chakra-ui-mdx-boilerplate/blob/1e2cae91f9668dfdf6f340703899ddcc262460fc/components/MDXComponents.tsx#L127
-const components = {
-  a: Link,
-  h1: (props: any) => <Heading as="h1" {...props} />,
-  h2: (props: any) => <Heading as="h2" {...props} />,
-  h3: (props: any) => <Heading as="h3" {...props} />,
-  h4: (props: any) => <Heading as="h4" {...props} />,
-  h5: (props: any) => <Heading as="h5" {...props} />,
-  h6: (props: any) => <Heading as="h6" {...props} />,
-  p: (props: any) => <Text as="p" mt={0} lineHeight="tall" {...props} />,
-  /*li: (props: any) => <Box as="li" pb={1} {...props} />,
-  ul: (props: any) => <Box as="ul" pt={2} pl={4} ml={2} {...props} />,
-  ol: (props: any) => <Box as="ol" pt={2} pl={4} ml={2} {...props} />,
-  */
-  li: (props: any) => <ListItem {...props} />,
-  ul: (props: any) => <UnorderedList {...props} />,
-  ol: (props: any) => <OrderedList {...props} />,
-  hr: (props: any) => <Divider {...props} />,
-  inlineCode: (props: any) => <Code {...props} />,
-  br: (props: any) => <Box height="24px" {...props} />,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-  Head,
-}
+// const components = {
+//   a: Link,
+//   h1: (props: any) => <Heading as="h1" {...props} />,
+//   h2: (props: any) => <Heading as="h2" {...props} />,
+//   h3: (props: any) => <Heading as="h3" {...props} />,
+//   h4: (props: any) => <Heading as="h4" {...props} />,
+//   h5: (props: any) => <Heading as="h5" {...props} />,
+//   h6: (props: any) => <Heading as="h6" {...props} />,
+//   p: (props: any) => <Text as="p" mt={0} lineHeight="tall" {...props} />,
+//   /*li: (props: any) => <Box as="li" pb={1} {...props} />,
+//   ul: (props: any) => <Box as="ul" pt={2} pl={4} ml={2} {...props} />,
+//   ol: (props: any) => <Box as="ol" pt={2} pl={4} ml={2} {...props} />,
+//   */
+//   li: (props: any) => <ListItem {...props} />,
+//   ul: (props: any) => <UnorderedList {...props} />,
+//   ol: (props: any) => <OrderedList {...props} />,
+//   hr: (props: any) => <Divider {...props} />,
+//   inlineCode: (props: any) => <Code {...props} />,
+//   br: (props: any) => <Box height="24px" {...props} />,
+//   Alert,
+//   AlertIcon,
+//   AlertTitle,
+//   AlertDescription,
+//   Head,
+// }
 
 export default function PostPage({ source, frontMatter }: {source: any, frontMatter: { title: string, description: string}}): JSX.Element {
   return (
     <Layout>
-      <div className="post-header" hidden>
+      <div className="post-header">
         <Heading as="h1" size="2xl">
           {frontMatter.title}
         </Heading>
-        <Text className="description">{frontMatter.description}</Text>
+        <div className="post-subheader text-2xl">{frontMatter.description}</div>
         <Divider />
       </div>
       <main>
-        <MDXRemote {...source} components={components} />
+        <MDXRemote {...source} components/>
       </main>
 
       <style jsx>{`
@@ -62,9 +62,6 @@ export default function PostPage({ source, frontMatter }: {source: any, frontMat
 
         .post-header {
           margin-bottom: 2rem;
-        }
-        .description {
-          opacity: 0.6;
         }
       `}</style>
     </Layout>
