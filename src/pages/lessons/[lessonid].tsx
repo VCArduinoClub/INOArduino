@@ -44,11 +44,11 @@ const components = {
 export default function PostPage({ source, frontMatter }: {source: any, frontMatter: { title: string, description: string}}): JSX.Element {
   return (
     <Layout>
-      <div className="post-header" hidden>
-        <Heading as="h1" size="2xl">
+      <div className="post-header">
+        <Heading as="h2" size="xl" mb={5}>
           {frontMatter.title}
         </Heading>
-        <Text className="description">{frontMatter.description}</Text>
+        <Text className="description" mb={5}>{frontMatter.description}</Text>
         <Divider />
       </div>
       <main>
