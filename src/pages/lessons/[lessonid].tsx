@@ -8,6 +8,7 @@ import path from 'path'
 import { Link, Heading, Text, Alert, useColorModeValue, AlertIcon, AlertTitle, AlertDescription, ListItem, UnorderedList, OrderedList, Divider, Code, Box } from "@chakra-ui/react";
 import Layout from '../../components/Layout'
 import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils'
+import KeyConcept from '../../components/KeyConcept'
 
 // Custom components/renderers to pass to MDX.
 // Since the MDX files aren't loaded by webpack (or SWC, now.), they have no knowledge of how
@@ -34,6 +35,7 @@ const components = {
   hr: (props: any) => <Divider {...props} />,
   // inlineCode: (props: any) => <Code className={useColorModeValue('bg-gray-100', 'bg-gray-700')} {...props} />,
   code: (props: any) => <Code className={useColorModeValue('bg-gray-100', 'bg-gray-700')} {...props} />,
+  keyconcept: (props: {header: string, children: any}) => <KeyConcept {...props} />,
 
   //  <Code display={"block"} {...props} />,
   // inlineCode: (props: any) => (
