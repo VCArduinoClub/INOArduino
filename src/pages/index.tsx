@@ -9,7 +9,6 @@ import { postFilePaths, POSTS_PATH } from "../utils/mdxUtils";
 import matter from "gray-matter";
 import path from "path";
 
-
 type Lesson = {
   path: string,
   title: string,
