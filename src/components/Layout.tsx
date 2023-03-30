@@ -22,7 +22,6 @@ import {
 } from '@chakra-ui/react';
 
 import { MoonIcon, SunIcon, HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons';
-import KeyConcept from './KeyConcept';
 
 const Links = ['Dashboard', 'Simulator', 'Teams', 'Profile', 'Settings'];
 

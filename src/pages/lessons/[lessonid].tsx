@@ -52,9 +52,6 @@ const components = {
 export default function PostPage({ source, frontMatter }: { source: any, frontMatter: { title: string, description: string } }): JSX.Element {
   return (
     <Layout>
-
-
-
       <div className="post-header">
         <Heading as="h2" size="xl" mb={5}>
           {frontMatter.title}
