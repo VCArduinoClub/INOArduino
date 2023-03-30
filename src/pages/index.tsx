@@ -19,7 +19,7 @@ type HomeProps = {
   lessons: Lesson[]
 }
 
-const Home: NextPage<HomeProps> = ({lessons}) => {
+const Home: NextPage<HomeProps> = ({ lessons }) => {
   const test = api.example.hello.useQuery({ text: "from tRPC" });
   return (
     <>
@@ -35,7 +35,7 @@ const Home: NextPage<HomeProps> = ({lessons}) => {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
             {
               lessons.map((lesson) => (
-                <HomeLink 
+                <HomeLink
                   path={lesson.path.replace('.mdx', '')}
                   title={lesson.title}
                   description={lesson.description}
@@ -76,20 +76,20 @@ const AuthShowcase: React.FC = () => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async() => {
+export const getStaticProps: GetStaticProps = async () => {
 
-  const lessonInfo = 
-  postFilePaths.map((lesson_path) => {
-    const postFilePath = path.join(POSTS_PATH, `${lesson_path}`);
-    const source = fs.readFileSync(postFilePath);
-    const matterContent = matter(source);
-    return {
-          path: lesson_path,
-          ...matterContent.data,
+  const lessonInfo =
+    postFilePaths.map((lesson_path) => {
+      const postFilePath = path.join(POSTS_PATH, `${lesson_path}`);
+      const source = fs.readFileSync(postFilePath);
+      const matterContent = matter(source);
+      return {
+        path: lesson_path,
+        ...matterContent.data,
       }
     }
-  )
-  
+    )
+
   return {
     props: {
       lessons: lessonInfo,
