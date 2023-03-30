@@ -1,13 +1,24 @@
 import fs from 'fs'
 import matter from 'gray-matter'
 import { MDXRemote } from 'next-mdx-remote'
+import rehypeHighlight from "rehype-highlight";
 import { serialize } from 'next-mdx-remote/serialize'
 import dynamic from 'next/dynamic'
+import React from 'react';
 import Head from 'next/head'
 import path from 'path'
 import { Link, Heading, Text, Alert, useColorModeValue, AlertIcon, AlertTitle, AlertDescription, ListItem, UnorderedList, OrderedList, Divider, Code, Box } from "@chakra-ui/react";
 import Layout from '../../components/Layout'
 import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils'
+// import hljs from 'highlight.js';
+import langArduino from 'highlight.js/lib/languages/arduino'
+
+import 'highlight.js/styles/arduino-light.css'
+// import 'highlight.js/styles/a11y-dark.css'
+const languages = {
+  arduino: langArduino
+
+}
 
 // Custom components/renderers to pass to MDX.
 // Since the MDX files aren't loaded by webpack (or SWC, now.), they have no knowledge of how
@@ -62,6 +73,7 @@ export default function PostPage({ source, frontMatter }: { source: any, frontMa
         <Divider />
       </div>
       <main>
+
         <MDXRemote {...source} components={components} />
       </main>
 
@@ -103,8 +115,10 @@ export const getStaticProps = async ({ params }: { params: any }) => {
   const mdxSource = await serialize(content, {
     // Optionally pass remark/rehype plugins
     mdxOptions: {
-      remarkPlugins: [],
-      rehypePlugins: [],
+      rehypePlugins: [[rehypeHighlight, {
+        ignoreMissing: true,
+        languages
+      }]]
     },
     scope: data,
   })
