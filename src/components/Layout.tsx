@@ -21,7 +21,7 @@ import {
 
 
 } from '@chakra-ui/react';
-
+import Syntaxh from '../styles/Syntaxh';
 import { MoonIcon, SunIcon, HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons';
 
 const Links = ['Dashboard', 'Simulator', 'Teams', 'Profile', 'Settings'];
@@ -46,6 +46,8 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   return (
     <>
+      <Syntaxh theme={colorMode} />
+
       <Box position="fixed" w="100%" bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
 
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>

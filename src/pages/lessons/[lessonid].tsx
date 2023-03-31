@@ -1,14 +1,24 @@
 import fs from 'fs'
 import matter from 'gray-matter'
 import { MDXRemote } from 'next-mdx-remote'
+import rehypeHighlight from "rehype-highlight";
 import { serialize } from 'next-mdx-remote/serialize'
 import dynamic from 'next/dynamic'
+import React from 'react';
 import Head from 'next/head'
+import { useEffect } from 'react';
 import path from 'path'
 import { Link, Heading, Text, Alert, useColorModeValue, AlertIcon, AlertTitle, AlertDescription, ListItem, UnorderedList, OrderedList, Divider, Code, Box } from "@chakra-ui/react";
 import Layout from '../../components/Layout'
 import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils'
-import KeyConcept from '../../components/KeyConcept'
+// import hljs from 'highlight.js';
+import langArduino from 'highlight.js/lib/languages/arduino'
+
+// import 'highlight.js/styles/ascetic.css'
+const languages = {
+  arduino: langArduino
+
+}
 
 // Custom components/renderers to pass to MDX.
 // Since the MDX files aren't loaded by webpack (or SWC, now.), they have no knowledge of how
@@ -35,13 +45,14 @@ const components = {
   hr: (props: any) => <Divider {...props} />,
   // inlineCode: (props: any) => <Code className={useColorModeValue('bg-gray-100', 'bg-gray-700')} {...props} />,
   code: (props: any) => <Code className={useColorModeValue('bg-gray-100', 'bg-gray-700')} {...props} />,
-  keyconcept: (props: {header: string, children: any}) => <KeyConcept {...props} />,
 
+
+  pre: (props: any) => <Box whiteSpace={"pre"}  {...props} />,//<Code display={"block"} whitespace="pre" className={useColorModeValue('bg-gray-100', 'bg-gray-700')} {...props} />,
   //  <Code display={"block"} {...props} />,
   // inlineCode: (props: any) => (
   //   <Code children={props} dip />
   // ),ç
-  br: (props: any) => <Box height="12px" {...props} />,
+  br: (props: any) => <br></br>,//<Box height="12px" {...props} />,
   Alert,
   AlertIcon,
   AlertTitle,
@@ -52,6 +63,9 @@ const components = {
 export default function PostPage({ source, frontMatter }: { source: any, frontMatter: { title: string, description: string } }): JSX.Element {
   return (
     <Layout>
+
+
+
       <div className="post-header">
         <Heading as="h2" size="xl" mb={5}>
           {frontMatter.title}
@@ -61,6 +75,7 @@ export default function PostPage({ source, frontMatter }: { source: any, frontMa
         <Divider />
       </div>
       <main>
+
         <MDXRemote {...source} components={components} />
       </main>
 
@@ -102,8 +117,10 @@ export const getStaticProps = async ({ params }: { params: any }) => {
   const mdxSource = await serialize(content, {
     // Optionally pass remark/rehype plugins
     mdxOptions: {
-      remarkPlugins: [],
-      rehypePlugins: [],
+      rehypePlugins: [[rehypeHighlight, {
+        ignoreMissing: true,
+        languages
+      }]]
     },
     scope: data,
   })
