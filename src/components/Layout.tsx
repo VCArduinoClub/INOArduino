@@ -20,7 +20,7 @@ import {
 
 
 } from '@chakra-ui/react';
-import Syntaxh from './Syntaxh';
+import Syntaxh from '../styles/Syntaxh';
 import { MoonIcon, SunIcon, HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons';
 
 const Links = ['Dashboard', 'Simulator', 'Teams', 'Profile', 'Settings'];
