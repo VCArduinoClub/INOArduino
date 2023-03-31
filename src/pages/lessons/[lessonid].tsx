@@ -6,6 +6,7 @@ import { serialize } from 'next-mdx-remote/serialize'
 import dynamic from 'next/dynamic'
 import React from 'react';
 import Head from 'next/head'
+import { useEffect } from 'react';
 import path from 'path'
 import { Link, Heading, Text, Alert, useColorModeValue, AlertIcon, AlertTitle, AlertDescription, ListItem, UnorderedList, OrderedList, Divider, Code, Box } from "@chakra-ui/react";
 import Layout from '../../components/Layout'
@@ -13,8 +14,7 @@ import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils'
 // import hljs from 'highlight.js';
 import langArduino from 'highlight.js/lib/languages/arduino'
 
-import 'highlight.js/styles/arduino-light.css'
-// import 'highlight.js/styles/a11y-dark.css'
+// import 'highlight.js/styles/ascetic.css'
 const languages = {
   arduino: langArduino
 
@@ -46,11 +46,13 @@ const components = {
   // inlineCode: (props: any) => <Code className={useColorModeValue('bg-gray-100', 'bg-gray-700')} {...props} />,
   code: (props: any) => <Code className={useColorModeValue('bg-gray-100', 'bg-gray-700')} {...props} />,
 
+
+  pre: (props: any) => <Box whiteSpace={"pre"}  {...props} />,//<Code display={"block"} whitespace="pre" className={useColorModeValue('bg-gray-100', 'bg-gray-700')} {...props} />,
   //  <Code display={"block"} {...props} />,
   // inlineCode: (props: any) => (
   //   <Code children={props} dip />
   // ),ç
-  br: (props: any) => <Box height="12px" {...props} />,
+  br: (props: any) => <br></br>,//<Box height="12px" {...props} />,
   Alert,
   AlertIcon,
   AlertTitle,

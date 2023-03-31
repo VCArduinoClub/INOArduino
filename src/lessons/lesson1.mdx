@@ -64,17 +64,19 @@ Try running this code on your IDE, and uploading to the Arduino! Typing it out m
 
 ```arduino 
 void setup () {
+
     // Start serial communication at a baud rate of 9600
     // This is how we can send text from the arduino
-    Serial.begin (9600);// 9600 baud rate
+    Serial.begin(9600);// 9600 baud rate
     // Loop code runs repeatedly
 }
+
 void loop () {
-    / Write "Hello, World!" to serial
+    // Write "Hello, World!" to serial
     // we can view this text in the Serial Monitor
-    Serial.write ("Hello, World!");
+    Serial.write("Hello, World!");
     // Send Hello World every 1000 ms (1 second)
-    delay (1000);
+    delay(1000);
 }
 ```
 
