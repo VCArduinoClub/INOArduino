@@ -60,9 +60,9 @@ const components = {
   Head,
 }
 
-export default function PostPage({ source, frontMatter }: { source: any, frontMatter: { title: string, description: string } }): JSX.Element {
+export default function PostPage({ source, frontMatter, lessons }: { source: any, frontMatter: { title: string, description: string }, lessons: any }): JSX.Element {
   return (
-    <Layout>
+    <Layout lessons={lessons}>
 
 
 
@@ -110,9 +110,22 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }: { params: any }) => {
   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
   const postFilePath = path.join(POSTS_PATH, `${params.lessonid}.mdx`)
+  // console.log(POSTS_PATH)
   const source = fs.readFileSync(postFilePath)
 
   const { content, data } = matter(source)
+  const lessonInfo =
+    postFilePaths.map((lesson_path) => {
+      const postFilePath = path.join(POSTS_PATH, `${lesson_path}`);
+      const source = fs.readFileSync(postFilePath);
+      const matterContent = matter(source);
+      return {
+        path: lesson_path,
+        ...matterContent.data,
+      }
+    }
+    )
+  // console.log(lessonInfo)
 
   const mdxSource = await serialize(content, {
     // Optionally pass remark/rehype plugins
@@ -129,6 +142,7 @@ export const getStaticProps = async ({ params }: { params: any }) => {
     props: {
       source: mdxSource,
       frontMatter: data,
+      lessons: lessonInfo,
     },
   }
 }
