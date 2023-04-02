@@ -21,8 +21,17 @@ import {
 
 
 } from '@chakra-ui/react';
+
+
+
 import Syntaxh from '../styles/Syntaxh';
-import { MoonIcon, SunIcon, HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons';
+import { MoonIcon, SunIcon, ChevronDownIcon } from '@chakra-ui/icons';
+type lesson = {
+  path: string,
+  title: string,
+  description: string,
+};
+
 
 const Links = ['Dashboard', 'Simulator', 'Teams', 'Profile', 'Settings'];
 
@@ -40,7 +49,7 @@ const NavLink = ({ children }: { children: ReactNode }) => (
   </Link>
 );
 
-export default function Layout({ children }: { children: ReactNode }) {
+export default function Layout({ lessons, children }: { lessons: any, children: ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -67,10 +76,10 @@ export default function Layout({ children }: { children: ReactNode }) {
                 Lessons
               </MenuButton>
               <MenuList>
-                <MenuItem ><a href="/lessons/lesson1">Lesson 1</a></MenuItem>
-                <MenuItem>Lesson 2</MenuItem>
-                <MenuItem>Lesson 3</MenuItem>
-                <MenuItem>Lesson 4</MenuItem>
+                {lessons.map((lesson: lesson) => (
+                  <MenuItem key={lesson.path.replace('.mdx', '')}><a href={`/lessons/${lesson.path.replace('.mdx', '')}`}>{lesson.title}</a></MenuItem>
+                ))}
+
               </MenuList>
             </Menu>
             <HStack
@@ -121,3 +130,4 @@ export default function Layout({ children }: { children: ReactNode }) {
     </>
   );
 }
+
