@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "preinstall": "npx only-allow pnpm" 
-    "build": "next build",
+    "preinstall": "npx only-allow pnpm""build": "next build",
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
@@ -22,9 +21,12 @@
     "@trpc/next": "^10.9.0",
     "@trpc/react-query": "^10.9.0",
     "@trpc/server": "^10.9.0",
+    "@wokwi/elements": "^1.4.5",
+    "avr8js": "^0.20.1",
     "framer-motion": "^10.2.3",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.7.0",
+    "intel-hex": "^0.1.2",
     "next": "13.1.6",
     "next-auth": "^4.19.0",
     "next-mdx-remote": "^4.4.1",
