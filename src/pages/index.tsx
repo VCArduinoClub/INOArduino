@@ -1,13 +1,16 @@
-import { GetStaticProps, NextPageContext, type NextPage } from "next";
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import Head from "next/head";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import fs from 'fs';
-
+import router from "next/router";
 import { api } from "../utils/api";
 import HomeLink from "../components/HomeLink";
 import { postFilePaths, POSTS_PATH } from "../utils/mdxUtils";
 import matter from "gray-matter";
 import path from "path";
+import { GetStaticProps, NextPage } from "next";
 
 type Lesson = {
   path: string,
@@ -34,7 +37,8 @@ const Home: NextPage<HomeProps> = ({lessons}) => {
           </h1>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
             {
-              lessons.map((lesson) => (
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+              lessons.map((lesson: { path: string; title: string; description: string; }) => (
                 <HomeLink 
                   path={lesson.path.replace('.mdx', '')}
                   title={lesson.title}
@@ -68,9 +72,9 @@ const AuthShowcase: React.FC = () => {
       </p>
       <button
         className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-        onClick={sessionData ? () => void signOut() : () => void signIn()}
+        onClick={() => router.push('/signin')}
       >
-        {sessionData ? "Sign out" : "Sign in"}
+      
       </button>
     </div>
   );
