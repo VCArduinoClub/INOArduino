@@ -25,7 +25,7 @@ providers: [
 ], 
 
 pages: {
-    signIn: "/signin",
+    //signIn: "/signin",
 }
 };
 

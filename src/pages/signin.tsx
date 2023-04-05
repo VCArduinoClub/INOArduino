@@ -227,7 +227,7 @@ const SignIn = ({providers}: {providers: AppProps}) => {
     </>
   );
 };
-export default Signin;
+export default SignIn;
 
 export const getSeverSideProps: GetServerSideProps = async () => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import Head from "next/head";
-import { useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import fs from 'fs';
 import router from "next/router";
 import { api } from "../utils/api";
@@ -48,6 +48,7 @@ const Home: NextPage<HomeProps> = ({lessons}) => {
               ))
             }
           </div>
+          <AuthShowcase />
         </div>
       </main>
     </>
@@ -72,9 +73,9 @@ const AuthShowcase: React.FC = () => {
       </p>
       <button
         className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-        onClick={() => router.push('/signin')}
+        onClick={sessionData ? () => void signOut() : () => void signIn()}
       >
-      
+        {sessionData ? "Sign out" : "Sign in"}
       </button>
     </div>
   );
