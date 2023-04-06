@@ -65,7 +65,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                 Lessons
               </MenuButton>
               <MenuList>
-                <MenuItem ><a href="/lessons/lesson1">Lesson 1</a></MenuItem>
+                <MenuItem >Lesson 1</MenuItem>
                 <MenuItem>Lesson 2</MenuItem>
                 <MenuItem>Lesson 3</MenuItem>
                 <MenuItem>Lesson 4</MenuItem>
