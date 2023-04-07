@@ -16,12 +16,22 @@ import {
   useColorModeValue,
   Stack,
   useColorMode,
-  Spacer
+  // Spacer
+  Container
 
 
 } from '@chakra-ui/react';
 
-import { MoonIcon, SunIcon, HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons';
+
+
+import Syntaxh from '../styles/Syntaxh';
+import { MoonIcon, SunIcon, ChevronDownIcon } from '@chakra-ui/icons';
+type lesson = {
+  path: string,
+  title: string,
+  description: string,
+};
+
 
 const Links = ['Dashboard', 'Simulator', 'Teams', 'Profile', 'Settings'];
 
@@ -39,36 +49,38 @@ const NavLink = ({ children }: { children: ReactNode }) => (
   </Link>
 );
 
-export default function Layout({ children }: { children: ReactNode }) {
+export default function Layout({ lessons, children }: { lessons: any, children: ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <>
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+      <Syntaxh theme={colorMode} />
+
+      <Box position="fixed" w="100%" bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-          <IconButton
-            size={'md'}
-            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-            aria-label={'Open Menu'}
-            display={{ md: 'none' }}
-            onClick={isOpen ? onClose : onOpen}
-          />
+
           <HStack spacing={8} alignItems={'center'}>
+
             <Box>
+
               <Link href="/">
                 Home
+                {/* <HamburgerIcon /> */}
               </Link>
             </Box>
+
             <Menu>
               <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
                 Lessons
               </MenuButton>
               <MenuList>
-                <MenuItem >Lesson 1</MenuItem>
-                <MenuItem>Lesson 2</MenuItem>
-                <MenuItem>Lesson 3</MenuItem>
-                <MenuItem>Lesson 4</MenuItem>
+
+                {lessons.map((lesson: lesson) => (
+                  <MenuItem key={lesson.path.replace('.mdx', '')}><a href={`/lessons/${lesson.path.replace('.mdx', '')}`}>{lesson.title}</a></MenuItem>
+                ))}
+
               </MenuList>
             </Menu>
             <HStack
@@ -112,18 +124,11 @@ export default function Layout({ children }: { children: ReactNode }) {
           </Flex>
         </Flex>
 
-        {isOpen ? (
-          <Box pb={4} display={{ md: 'none' }}>
-            <Stack as={'nav'} spacing={4}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
-            </Stack>
-          </Box>
-        ) : null}
+
       </Box>
 
-      <Box p={4}>{children}</Box>
+      <Box p={20}>{children}</Box>
     </>
   );
 }
+
