@@ -22,7 +22,6 @@
     "@trpc/next": "^10.9.0",
     "@trpc/react-query": "^10.9.0",
     "@trpc/server": "^10.9.0",
-    "dotenv-webpack": "^2.0.0",
     "framer-motion": "^10.2.3",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.7.0",
@@ -36,9 +35,9 @@
     "zod": "^3.20.2"
   },
   "devDependencies": {
-    "@types/node": "^18.15.11",
+    "@types/node": "^18.11.18",
     "@types/prettier": "^2.7.2",
-    "@types/react": "^18.0.33",
+    "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "@typescript-eslint/eslint-plugin": "^5.47.1",
     "@typescript-eslint/parser": "^5.47.1",

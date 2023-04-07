@@ -1,16 +1,13 @@
-/* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-misused-promises */
+import { GetStaticProps, NextPageContext, type NextPage } from "next";
 import Head from "next/head";
 import { signIn, signOut, useSession } from "next-auth/react";
 import fs from 'fs';
-import router from "next/router";
+
 import { api } from "../utils/api";
 import HomeLink from "../components/HomeLink";
 import { postFilePaths, POSTS_PATH } from "../utils/mdxUtils";
 import matter from "gray-matter";
 import path from "path";
-import { GetStaticProps, NextPage } from "next";
 
 type Lesson = {
   path: string,
@@ -37,10 +34,8 @@ const Home: NextPage<HomeProps> = ({ lessons }) => {
           </h1>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
             {
-
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-              lessons.map((lesson: { path: string; title: string; description: string; }) => (
-                <HomeLink 
+              lessons.map((lesson) => (
+                <HomeLink
                   path={lesson.path.replace('.mdx', '')}
                   title={lesson.title}
                   description={lesson.description}
@@ -49,7 +44,6 @@ const Home: NextPage<HomeProps> = ({ lessons }) => {
               ))
             }
           </div>
-          <AuthShowcase />
         </div>
       </main>
     </>
