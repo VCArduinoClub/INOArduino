@@ -7,23 +7,12 @@ import { AVRRunner } from "./execute";
 // import { formatTime } from "./format-time";
 import { LEDElement } from "@wokwi/elements";
 import { Alert, AlertDescription, AlertTitle, Button, Stack, Text, Textarea, useToast } from '@chakra-ui/react';
-import {
-  CPU,
-  avrInstruction,
-  AVRIOPort,
-  portDConfig,
-  PinState,
-  AVRTimer,
-  timer0Config
-} from 'avr8js';
 import Editor, { Monaco } from "@monaco-editor/react";
-import { set } from 'zod';
-import { run } from 'node:test';
 
 
 const SimPage = () => {
   return (
-    <Layout>
+    <Layout lessons={[]}>
       <ArduinoSim />
     </Layout>
   )
@@ -58,9 +47,8 @@ const ArduinoSim = () => {
   const [usingMonaco, setUsingMonaco] = useState(false);
   const textAreaMultiplier = 1; // Set the textarea height to the number of lines
   const textAreaHeight = arduinoCode.split(/\r\n|\r|\n/).length * textAreaMultiplier;
-  const errorToast = useToast();
+  const toast = useToast();
   const editorRef = useRef(null);
-  let runner: AVRRunner;
 
   useEffect(function () {
     if (typeof window !== "undefined") {
@@ -84,8 +72,8 @@ const ArduinoSim = () => {
   }
 
 
-  function executeProgram(hex: string) {
-    runner = new AVRRunner(hex);
+  async function executeProgram(hex: string) {
+    let runner = new AVRRunner(hex);
 
     // // Hook to PORTB register
     //BELOW CODE IS for LED- will implement later
@@ -99,60 +87,43 @@ const ArduinoSim = () => {
     // });
 
     // Serial port output support
-    runner.usart.onByteTransmit = (value: number) => {
+    // runner.usart.onByteTransmit = (value: number) => {
+    //   console.log(String.fromCharCode(value));
+    // };
 
-      console.log(String.fromCharCode(value));
-    };
-
-
-
-    runner.execute(cpu => {
+     runner.execute(cpu => {
       const time = (cpu.cycles / runner.MHZ);
-      console.log(isRunning)
-      //note: for some reason this alwasy prints false even when the code is running
-
     });
     // }
   }
 
   async function compileAndRun() {
-
-    try {
-      console.log("Compiling...");
-      setRunningState(true);
-
-      const result = await buildHex(arduinoCode);
-      console.log(result.stderr || result.stdout);
-      if (result.hex) {
-        console.log("\nProgram running...");
-        setRunningState(true);
-
-        // stopButton.removeAttribute("disabled");
-        executeProgram(result.hex);
-      } else {
-        console.log("1")
-        // setRunningState(false);
-
-      }
-    } catch (err) {
-      console.log("2")
-
-      // setRunningState(false);
-
-      // runButton.removeAttribute("disabled");
-      alert("Failed: " + err);
+    console.log("Compiling...");
+    const result = await buildHex(arduinoCode);
+    // console.log(result.stderr || result.stdout);
+    if (!result.hex) {
+        toast({
+          title: 'Compile Error',
+          description: result.stderr,
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+      });
+      setRunningState(false);
+      return;
+        // console.log("\nProgram running...");
+        // executeProgram(result.hex);
     }
-  }
 
-  const runCode = () => {
+    toast({
+      title: 'Code Compiled',
+      description: 'Code compiled successfully',
+      status: 'success',
+      duration: 5000,
+      isClosable: true,
+    })
 
-    // alert("hi")
-    // compileAndRun();
-
-    //   let _isRunning = true;
-    setRunningState(true);
-    console.log(isRunning);
-    compileAndRun();
+    executeProgram(result.hex);
   }
 
 
@@ -164,8 +135,6 @@ const ArduinoSim = () => {
       setArduinoCode(e.target.value);
     }
   }
-
-
 
   function stopCode() {
     console.log("stopped")
@@ -183,7 +152,10 @@ const ArduinoSim = () => {
       <Text as='b' fontSize='xl'>Arduino Simulator</Text>
       <Stack direction='row'>
         <Button
-          onClick={runCode}
+          onClick={() => {
+            setRunningState(true);
+            compileAndRun();
+          }}
           isLoading={isRunning}
         >
           Run
