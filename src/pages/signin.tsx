@@ -6,10 +6,10 @@
 /* eslint-disable @next/next/no-typos */
 import Link from "next/link";
 import type { AppProps } from "next/app";
-import { GetServerSideProps, NextPage } from "next";
 import { getProviders, signIn } from "next-auth/react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const SignIn = ({providers}: {providers: AppProps}) => {
+const providers = getProviders();
+const SignIn = ({providers}: {providers: AppProps}) => { // providers will be used later when oAuth is implemented
   return (
     <>
       <section className="relative z-10 overflow-hidden pt-36 pb-16 md:pb-20 lg:pt-[180px] lg:pb-28">
@@ -24,15 +24,11 @@ const SignIn = ({providers}: {providers: AppProps}) => {
                   Login to your account for a faster checkout.
                 </p>
                 <div>
-                {
-                  Object.values(providers).map((provider) => (
+                
+                  
                 <button
-                key={provider.id}
-                onClick ={() => 
-                  signIn(provider.id, {
-                    callbackUrl: `${window.location.origin}`,
-                  })
-                }
+            
+                
                 className="mb-6 flex w-full items-center justify-center rounded-md bg-white p-3 text-base font-medium text-body-color shadow-one hover:text-primary dark:bg-[#242B51] dark:text-body-color dark:shadow-signUp dark:hover:text-white">
                   <span className="mr-3">
                     <svg
@@ -69,7 +65,7 @@ const SignIn = ({providers}: {providers: AppProps}) => {
                   </span>
                   Sign in with Google
                 </button>
-                  ))}
+                 
                 </div>
                 <div className="mb-8 flex items-center justify-center">
                   <span className="hidden h-[1px] w-full max-w-[70px] bg-body-color sm:block"></span>
