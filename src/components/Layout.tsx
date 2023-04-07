@@ -76,6 +76,7 @@ export default function Layout({ lessons, children }: { lessons: any, children: 
                 Lessons
               </MenuButton>
               <MenuList>
+
                 {lessons.map((lesson: lesson) => (
                   <MenuItem key={lesson.path.replace('.mdx', '')}><a href={`/lessons/${lesson.path.replace('.mdx', '')}`}>{lesson.title}</a></MenuItem>
                 ))}
