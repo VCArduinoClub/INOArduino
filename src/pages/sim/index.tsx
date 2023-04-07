@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import Layout from '../../components/Layout';
-import React, { useState, useRef, useEffect, ChangeEventHandler } from 'react';
-// import { parse } from "intel-hex";
-import { buildHex } from "./compile";
-import { AVRRunner } from "./execute";
-// import { formatTime } from "./format-time";
+import { useState, useRef, useEffect, ChangeEventHandler } from 'react';
+import { buildHex } from "../../utils/sim/compile";
+import { AVRRunner } from "../../utils/sim/execute";
 import { LEDElement } from "@wokwi/elements";
 import { Alert, AlertDescription, AlertTitle, Button, Stack, Text, Textarea, useToast } from '@chakra-ui/react';
 import Editor, { Monaco } from "@monaco-editor/react";
@@ -40,16 +38,16 @@ void loop() {
 `;
 
 const ArduinoSim = () => {
-  // const [ledState, setLedState] = useState(false);
   const [isRunning, setRunningState] = useState(false);
   const [arduinoCode, setArduinoCode] = useState(exampleCode);
   const [online, setOnlineState] = useState(true);
+  const [hexcode, setHexcode] = useState("");
   const [usingMonaco, setUsingMonaco] = useState(false);
   const textAreaMultiplier = 1; // Set the textarea height to the number of lines
   const textAreaHeight = arduinoCode.split(/\r\n|\r|\n/).length * textAreaMultiplier;
   const toast = useToast();
   const editorRef = useRef(null);
-
+  let runner: AVRRunner;
   useEffect(function () {
     if (typeof window !== "undefined") {
       setOnlineState(navigator.onLine)
@@ -71,48 +69,35 @@ const ArduinoSim = () => {
     setUsingMonaco(true);
   }
 
+  function executeProgram(hex: string) {
+    runner = new AVRRunner(hex);
 
-  async function executeProgram(hex: string) {
-    let runner = new AVRRunner(hex);
+    runner.usart.onByteTransmit = (value: number) => {
 
-    // // Hook to PORTB register
-    //BELOW CODE IS for LED- will implement later
-    // runner.portB.addListener(value => {
+      console.log(String.fromCharCode(value));
+    };
 
-    //   // console.log(value)
-    //   // for (const led of LEDs) {
-    //   //   const pin = parseInt(led.getAttribute("pin"), 10);
-    //   //   led.value = value & (1 << (pin - 8)) ? true : false;
-    //   // }
-    // });
-
-    // Serial port output support
-    // runner.usart.onByteTransmit = (value: number) => {
-    //   console.log(String.fromCharCode(value));
-    // };
-
-     runner.execute(cpu => {
+    runner.execute((cpu) => {
       const time = (cpu.cycles / runner.MHZ);
     });
-    // }
+    // console.log(runner)
   }
+
 
   async function compileAndRun() {
     console.log("Compiling...");
     const result = await buildHex(arduinoCode);
     // console.log(result.stderr || result.stdout);
     if (!result.hex) {
-        toast({
-          title: 'Compile Error',
-          description: result.stderr,
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
+      toast({
+        title: 'Compile Error',
+        description: result.stderr,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
       });
       setRunningState(false);
-      return;
-        // console.log("\nProgram running...");
-        // executeProgram(result.hex);
+      return "";
     }
 
     toast({
@@ -123,7 +108,7 @@ const ArduinoSim = () => {
       isClosable: true,
     })
 
-    executeProgram(result.hex);
+    return result.hex;
   }
 
 
@@ -136,15 +121,30 @@ const ArduinoSim = () => {
     }
   }
 
+  const runCode = () => {
+    setRunningState(true);
+    compileAndRun().then((hex) => {
+      if (hex) {
+        setHexcode(hex);
+      }
+    });
+  }
+  useEffect(() => {
+    if (hexcode) {
+      console.log("Program running...");
+      executeProgram(hexcode);
+    }
+  }, [hexcode])
   function stopCode() {
-    console.log("stopped")
     setRunningState(false)
-    //the below is what i got from how to stop it from the examle
-    // if (runner) {
-    // runner.stop();
+    if (runner) {
+      console.log("stopped")
 
-    //   runner = null;
-    // }
+      runner.stop();
+    }
+    else {
+      console.log("not running")
+    }
   }
 
   return (
@@ -152,10 +152,7 @@ const ArduinoSim = () => {
       <Text as='b' fontSize='xl'>Arduino Simulator</Text>
       <Stack direction='row'>
         <Button
-          onClick={() => {
-            setRunningState(true);
-            compileAndRun();
-          }}
+          onClick={runCode}
           isLoading={isRunning}
         >
           Run
