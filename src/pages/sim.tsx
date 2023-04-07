@@ -47,7 +47,7 @@ const ArduinoSim = () => {
   const [usingMonaco, setUsingMonaco] = useState(false);
   const textAreaMultiplier = 2; // Set the textarea height to the number of lines
   const textAreaHeight = arduinoCode.split(/\r\n|\r|\n/).length * textAreaMultiplier;
-  const errorToast = useToast();
+  const toast = useToast();
   const editorRef = useRef(null);
 
   useEffect(function(){
@@ -72,11 +72,10 @@ const ArduinoSim = () => {
   }
 
   const runCode = async () => {
-    let _isRunning = true;
+    setRunningState(true);
     if (!navigator.onLine){
       setRunningState(false);
-      _isRunning = false;
-      errorToast({
+      toast({
         title: "No internet connection.",
         description: "You need to be connected to the internet in order to use the simulator. Learn more: https://inoarduino.vclubs.page/support/XDF-AB2-Simulator-Requires-Internet-Access",
         status: "error",
@@ -87,6 +86,7 @@ const ArduinoSim = () => {
     }
     // Compile the arduino source code
     console.log("Running code");
+
     const result = await fetch('https://hexi.wokwi.com/build', {
       method: 'post',
       body: JSON.stringify({ sketch: arduinoCode }),
@@ -97,7 +97,7 @@ const ArduinoSim = () => {
     const { hex, stderr } = await result.json() as { hex: string, stderr: string };
     if (!hex) {
       // alert(stderr);
-      errorToast({
+      toast({
         title: 'Compile Error',
         description: stderr,
         status: 'error',
@@ -121,7 +121,7 @@ const ArduinoSim = () => {
       console.log('LED', turnOn);
     });
     console.log("Simulator setup complete");
-    errorToast({
+    toast({
       title: 'Code Compiled',
       description: 'Code compiled successfully',
       status: 'success',
@@ -158,10 +158,6 @@ const ArduinoSim = () => {
     }
   }
 
-  const stopCode = () => {
-    setRunningState(false);
-  }
-
   return (
     <Stack direction='column' spacing={4}>
       <Text as='b' fontSize='xl'>Arduino Simulator</Text>
@@ -175,7 +171,7 @@ const ArduinoSim = () => {
       <Button
         colorScheme='red' 
         onClick={() => {
-          stopCode()
+          setRunningState(false)
         }}
       >
         Stop 
