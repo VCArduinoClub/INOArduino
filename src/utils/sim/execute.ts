@@ -26,8 +26,7 @@ export class AVRRunner {
 
   readonly MHZ = 16e6;
 
-  private stopped = false;
-
+  static stopped = false;
   constructor(hex: string) {
     loadHex(hex, new Uint8Array(this.program.buffer));
     this.cpu = new CPU(this.program);
@@ -39,14 +38,14 @@ export class AVRRunner {
   }
 
   async execute(callback: (cpu: CPU) => void) {
-    this.stopped = false;
+    AVRRunner.stopped = false;
     for (;;) {
       avrInstruction(this.cpu);
       this.cpu.tick();
       if (this.cpu.cycles % 500000 === 0) {
         callback(this.cpu);
         await new Promise(resolve => setTimeout(resolve, 0));
-        if (this.stopped) {
+        if (AVRRunner.stopped) {
           break;
         }
       }
@@ -54,6 +53,6 @@ export class AVRRunner {
   }
 
   stop() {
-    this.stopped = true;
+    AVRRunner.stopped = true;
   }
 }

@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, ChangeEventHandler } from 'react';
 import { buildHex } from "../../utils/sim/compile";
 import { AVRRunner } from "../../utils/sim/execute";
 import { LEDElement } from "@wokwi/elements";
-import { Alert, AlertDescription, AlertTitle, Button, Stack, Text, Textarea, useToast } from '@chakra-ui/react';
+import { Alert, AlertDescription, AlertTitle, Button, Stack, Text, Textarea, useToast, Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react';
 import Editor, { Monaco } from "@monaco-editor/react";
 
 
@@ -36,12 +36,13 @@ void loop() {
   i = (i + 1) % sizeof(leds);
 }
 `;
-
+let serial = "";
 const ArduinoSim = () => {
   const [isRunning, setRunningState] = useState(false);
   const [arduinoCode, setArduinoCode] = useState(exampleCode);
   const [online, setOnlineState] = useState(true);
   const [hexcode, setHexcode] = useState("");
+  const [ser, setSer] = useState("");
   const [usingMonaco, setUsingMonaco] = useState(false);
   const textAreaMultiplier = 1; // Set the textarea height to the number of lines
   const textAreaHeight = arduinoCode.split(/\r\n|\r|\n/).length * textAreaMultiplier;
@@ -75,6 +76,8 @@ const ArduinoSim = () => {
     runner.usart.onByteTransmit = (value: number) => {
 
       console.log(String.fromCharCode(value));
+      // serial += String.fromCharCode(value);
+      setSer((prev) => prev + String.fromCharCode(value));
     };
 
     runner.execute((cpu) => {
@@ -125,30 +128,35 @@ const ArduinoSim = () => {
     setRunningState(true);
     compileAndRun().then((hex) => {
       if (hex) {
+        AVRRunner.stopped = false;
+
         setHexcode(hex);
+
+
       }
+
     });
   }
   useEffect(() => {
+
     if (hexcode) {
+
+      console.log(AVRRunner.stopped)
       console.log("Program running...");
       executeProgram(hexcode);
     }
   }, [hexcode])
   function stopCode() {
     setRunningState(false)
-    if (runner) {
-      console.log("stopped")
-
-      runner.stop();
-    }
-    else {
-      console.log("not running")
-    }
+    AVRRunner.stopped = true;
+    setHexcode("");
+    setSer((prev) => prev + ("\n Program stopped"));
+    console.log("Program stopped");
   }
 
   return (
     <Stack direction='column' spacing={4}>
+      {/* <> */}
       <Text as='b' fontSize='xl'>Arduino Simulator</Text>
       <Stack direction='row'>
         <Button
@@ -165,28 +173,53 @@ const ArduinoSim = () => {
         >
           Stop
         </Button>
-
+        {/* </> */}
       </Stack>
-      {
-        online ? <Editor
-          height="90vh"
-          defaultLanguage="c"
-          defaultValue={arduinoCode}
-          onMount={handleEditorDidMount}
-          theme='vs-dark'
-          onChange={onArduinoCodeChange}
-        /> : <>
-          <Alert>
-            <AlertTitle>
-              No Internet Connection
-            </AlertTitle>
-            <AlertDescription>
-              You will not be able to simulate, compile, or use advanced IDE features.
-            </AlertDescription>
-          </Alert>
-          <Textarea value={arduinoCode} onChange={onArduinoCodeChange} height="90vh" />
-        </>
-      }
+      <Stack direction='row'>
+
+        {
+          online ? <Editor
+            height={"70vh"}
+            width={"50vw"}
+            defaultLanguage="c"
+            defaultValue={arduinoCode}
+            onMount={handleEditorDidMount}
+            theme='vs-dark'
+            onChange={onArduinoCodeChange}
+          /> : <>
+            <Alert>
+              <AlertTitle>
+                No Internet Connection
+              </AlertTitle>
+              <AlertDescription>
+                You will not be able to simulate, compile, or use advanced IDE features.
+              </AlertDescription>
+            </Alert>
+            <Textarea height={"70vh"}
+              width={"50vw"} value={arduinoCode} onChange={onArduinoCodeChange}
+            />
+          </>
+        }
+        <Card height={"70vh"} width={"50vw"}>
+          <CardHeader>
+            <Text as='b' fontSize='xl'>Serial Monitor</Text>
+          </CardHeader>
+          <CardBody>
+            <Textarea isReadOnly height={"full"} value={ser} />
+
+          </CardBody>
+          <CardFooter>
+            <Button
+              colorScheme='red'
+              onClick={() => {
+                setSer("");
+              }}
+            >
+              Clear
+            </Button>
+          </CardFooter>
+        </Card>
+      </Stack>
     </Stack>
   )
 }
