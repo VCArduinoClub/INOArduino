@@ -1,28 +1,39 @@
 import fs from 'fs'
 import matter from 'gray-matter'
 import { MDXRemote } from 'next-mdx-remote'
+import rehypeHighlight from "rehype-highlight";
 import { serialize } from 'next-mdx-remote/serialize'
 import dynamic from 'next/dynamic'
+import React from 'react';
 import Head from 'next/head'
+import { useEffect } from 'react';
 import path from 'path'
-import { Link, Heading, Text, Alert, AlertIcon, AlertTitle, AlertDescription, ListItem, UnorderedList, OrderedList,   Divider, Code, Box } from "@chakra-ui/react";
+import { Link, Heading, Text, Alert, useColorModeValue, AlertIcon, AlertTitle, AlertDescription, ListItem, UnorderedList, OrderedList, Divider, Code, Box } from "@chakra-ui/react";
 import Layout from '../../components/Layout'
 import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils'
+// import hljs from 'highlight.js';
+import langArduino from 'highlight.js/lib/languages/arduino'
+
+// import 'highlight.js/styles/ascetic.css'
+const languages = {
+  arduino: langArduino
+
+}
 
 // Custom components/renderers to pass to MDX.
-// Since the MDX files aren't loaded by webpack, they have no knowledge of how
+// Since the MDX files aren't loaded by webpack (or SWC, now.), they have no knowledge of how
 // to handle import statements. Instead, you must include components in scope
 // here.
 
 //https://github.com/bogadrian/nextjs-chakra-ui-mdx-boilerplate/blob/1e2cae91f9668dfdf6f340703899ddcc262460fc/components/MDXComponents.tsx#L127
 const components = {
   a: Link,
-  h1: (props: any) => <Heading as="h1" {...props} />,
-  h2: (props: any) => <Heading as="h2" {...props} />,
-  h3: (props: any) => <Heading as="h3" {...props} />,
-  h4: (props: any) => <Heading as="h4" {...props} />,
-  h5: (props: any) => <Heading as="h5" {...props} />,
-  h6: (props: any) => <Heading as="h6" {...props} />,
+  h1: (props: any) => <Heading as="h1"  {...props} />,
+  h2: (props: any) => <Heading as="h2" size='xl' {...props} />,
+  h3: (props: any) => <Heading as="h3" size='lg' {...props} />,
+  h4: (props: any) => <Heading as="h4" size='md' {...props} />,
+  h5: (props: any) => <Heading as="h5" size='sm' {...props} />,
+  h6: (props: any) => <Heading as="h6" size='xs' {...props} />,
   p: (props: any) => <Text as="p" mt={0} lineHeight="tall" {...props} />,
   /*li: (props: any) => <Box as="li" pb={1} {...props} />,
   ul: (props: any) => <Box as="ul" pt={2} pl={4} ml={2} {...props} />,
@@ -32,8 +43,16 @@ const components = {
   ul: (props: any) => <UnorderedList {...props} />,
   ol: (props: any) => <OrderedList {...props} />,
   hr: (props: any) => <Divider {...props} />,
-  inlineCode: (props: any) => <Code {...props} />,
-  br: (props: any) => <Box height="24px" {...props} />,
+  // inlineCode: (props: any) => <Code className={useColorModeValue('bg-gray-100', 'bg-gray-700')} {...props} />,
+  code: (props: any) => <Code className={useColorModeValue('bg-gray-100', 'bg-gray-700')} {...props} />,
+
+
+  pre: (props: any) => <Box whiteSpace={"pre"}  {...props} />,//<Code display={"block"} whitespace="pre" className={useColorModeValue('bg-gray-100', 'bg-gray-700')} {...props} />,
+  //  <Code display={"block"} {...props} />,
+  // inlineCode: (props: any) => (
+  //   <Code children={props} dip />
+  // ),ç
+  br: (props: any) => <br></br>,//<Box height="12px" {...props} />,
   Alert,
   AlertIcon,
   AlertTitle,
@@ -41,14 +60,22 @@ const components = {
   Head,
 }
 
-export default function PostPage({ source }: {source: any}): JSX.Element {
+export default function PostPage({ source, frontMatter, lessons }: { source: any, frontMatter: { title: string, description: string }, lessons: any }): JSX.Element {
   return (
-    <Layout>
-      <div className="post-header" hidden>
-        <h1>Header</h1>
-        <p> Lesson 2 </p>
+    <Layout lessons={lessons}>
+
+
+
+      <div className="post-header">
+        <Heading as="h2" size="xl" mb={5}>
+          {frontMatter.title}
+        </Heading>
+        {/* <div className="post-subheader text-2xl">{frontMatter.description}</div> */}
+        <Text className="description" mb={5}>{frontMatter.description}</Text>
+        <Divider />
       </div>
       <main>
+
         <MDXRemote {...source} components={components} />
       </main>
 
@@ -59,9 +86,6 @@ export default function PostPage({ source }: {source: any}): JSX.Element {
 
         .post-header {
           margin-bottom: 2rem;
-        }
-        .description {
-          opacity: 0.6;
         }
       `}</style>
     </Layout>
@@ -83,18 +107,33 @@ export const getStaticPaths = async () => {
 }
 
 
-export const getStaticProps = async ({ params } : { params: any}) => {
+export const getStaticProps = async ({ params }: { params: any }) => {
   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
   const postFilePath = path.join(POSTS_PATH, `${params.lessonid}.mdx`)
+  // console.log(POSTS_PATH)
   const source = fs.readFileSync(postFilePath)
 
   const { content, data } = matter(source)
+  const lessonInfo =
+    postFilePaths.map((lesson_path) => {
+      const postFilePath = path.join(POSTS_PATH, `${lesson_path}`);
+      const source = fs.readFileSync(postFilePath);
+      const matterContent = matter(source);
+      return {
+        path: lesson_path,
+        ...matterContent.data,
+      }
+    }
+    )
+  // console.log(lessonInfo)
 
   const mdxSource = await serialize(content, {
     // Optionally pass remark/rehype plugins
     mdxOptions: {
-      remarkPlugins: [],
-      rehypePlugins: [],
+      rehypePlugins: [[rehypeHighlight, {
+        ignoreMissing: true,
+        languages
+      }]]
     },
     scope: data,
   })
@@ -103,6 +142,7 @@ export const getStaticProps = async ({ params } : { params: any}) => {
     props: {
       source: mdxSource,
       frontMatter: data,
+      lessons: lessonInfo,
     },
   }
 }
