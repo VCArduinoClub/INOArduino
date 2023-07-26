@@ -2,7 +2,7 @@
 
 An arduino learning platform that teaches computer engineering through the arduino microcontroller to students paired with a customized kit. 
 
-test
+test2
 
 
 # Create T3 App
