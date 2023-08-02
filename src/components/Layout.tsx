@@ -108,16 +108,13 @@ export default function Layout({ lessons, children }: { lessons: any, children: 
                 minW={0}>
                 <Avatar
                   size={'sm'}
-                  src={
-                    'https://avatars.githubusercontent.com/u/64346567?v=4'
-                  }
                 />
               </MenuButton>
               <MenuList>
-                <MenuItem>Link 1</MenuItem>
-                <MenuItem>Link 2</MenuItem>
+                <MenuItem>Sign In</MenuItem>
+                <MenuItem>Sign Out</MenuItem>
                 <MenuDivider />
-                <MenuItem>Link 3</MenuItem>
+                <MenuItem>Profile</MenuItem>
               </MenuList>
             </Menu>
           </Flex>
