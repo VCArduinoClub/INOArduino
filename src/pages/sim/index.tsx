@@ -44,11 +44,14 @@ const ArduinoSim = () => {
   const [hexcode, setHexcode] = useState("");
   const [ser, setSer] = useState("");
   const [usingMonaco, setUsingMonaco] = useState(false);
+  
   const textAreaMultiplier = 1; // Set the textarea height to the number of lines
   const textAreaHeight = arduinoCode.split(/\r\n|\r|\n/).length * textAreaMultiplier;
   const toast = useToast();
   const editorRef = useRef(null);
   let runner: AVRRunner;
+
+
   useEffect(function () {
     if (typeof window !== "undefined") {
       setOnlineState(navigator.onLine)
@@ -131,8 +134,6 @@ const ArduinoSim = () => {
         AVRRunner.stopped = false;
 
         setHexcode(hex);
-
-
       }
 
     });
