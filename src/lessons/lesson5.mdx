@@ -4,30 +4,23 @@ description: "Sensors"
 ---
 
 # Lesson:
-<br></br>
 
 #### Ultrasonic sensor
 
 What is an ultrasonic sensor? Sensors that can detect something in their path or some obstruction. How do they work? Ultrasonic sensors work by sending out a sound wave at a frequency above the range of human hearing. The sensor can determine the distance from a target by recording the time that it takes for the sound wave to bounce back towards the sensor’s microphone. 
-<br></br>
 
 #### Hands On:
 Ultrasonic movement detection that is modulated by LED with a PWM signal
-<br></br>
 <img width="500" alt="arduino img" src="/images/UltrasonicExplain.png" />
-<br></br>
 
 1. VCC pin is power, connecting to 5V on the Arduino 
 2. GND pin connects to the GND pin on the Arduino board
 3. The Trig pin is used to trigger an ultrasonic wave, and connects to a digital pin on the board
 4. The Echo pin is the pin that goes high for a period of time which will be equal to the time that it takes for the wave to return to the sensor. This also connects to a digital pin on the Arduino board. 
-<br></br>
 
 Advanced activity: Check the code below. It reads a distance from the ultrasonic sensor and displays it on the monitor. Try running it. 
-<br></br>
 
 Your task is to design a game in which you are to get the ultrasonic sensor reading as close to a goal distance as possible. The goal distance must be randomly picked in a reasonable range, and you can use the reading distance code below as the base of your game. 
-<br></br>
 
 Students should start with this code below:
 ```arduino
@@ -65,15 +58,12 @@ void loop() {
   Serial.println(" cm");
 }
 ```
-<br></br>
 Final Behavior outline:
 
 - Tells player a round is starting and the round number
 - Generate a random distance and inform the player of the distance.  Make sure to use `randomSeed()` on an analog pin.  Use `random()` with two arguments to generate random numbers in a range
-<br></br>
     - Example: `randomSeed(some_analog_pin); (in setup)`
     - `random(0, 50) (in loop)`: generates a random number in the range 0-50
-<br></br>
 
 - Provide a 3, 2, 1 countdown for the player to place their hand in place attempting to match the goal distance (use delay function)
 - Provide the result and how far off the player was
