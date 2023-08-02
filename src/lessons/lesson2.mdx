@@ -1,6 +1,6 @@
 ---
 title: "Lesson 2"
-description: "LEDs"
+description: "all about LED's"
 ---
 
 # Introduction to Arduino and LEDs
@@ -32,13 +32,13 @@ Before connecting the LEDs to the Arduino board, let's create a simple circuit. 
 1. Connect the longer leg (anode) of the LED to the digital pin 13 on the Arduino board.
 2. Connect the shorter leg (cathode) of the LED to a resistor (220 ohms) and then to the Arduino's GND (ground) pin.
 
-![Arduino LED Circuit](https://example.com/arduino-led-circuit.png)
+[Arduino LED Circuit](../images/LEDCircuit.png)
 
 ## Arduino Code
 
 Next, open the Arduino IDE on your computer and write the following code:
 
-\`\`\`arduino
+```arduino
 void setup() {
 pinMode(13, OUTPUT);
 }
@@ -48,7 +48,7 @@ delay(1000);
 digitalWrite(13, LOW);
 delay(1000);
 }
-\`\`\`
+```
 
 ## Code Explanation
 
