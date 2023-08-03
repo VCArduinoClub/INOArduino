@@ -1,24 +1,19 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import {
   Box,
   Flex,
   Avatar,
   HStack,
   Link,
-  IconButton,
   Button,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
   MenuDivider,
-  useDisclosure,
   useColorModeValue,
-  Stack,
   useColorMode,
   // Spacer
-  Container
-
 
 } from '@chakra-ui/react';
 
@@ -26,11 +21,7 @@ import {
 
 import Syntaxh from '../styles/Syntaxh';
 import { MoonIcon, SunIcon, ChevronDownIcon } from '@chakra-ui/icons';
-type lesson = {
-  path: string,
-  title: string,
-  description: string,
-};
+import type { Lesson } from '../utils/mdxUtils';
 
 
 const Links = ['Dashboard', 'Simulator', 'Teams', 'Profile', 'Settings'];
@@ -49,8 +40,8 @@ const NavLink = ({ children }: { children: ReactNode }) => (
   </Link>
 );
 
-export default function Layout({ lessons, children }: { lessons: any, children: ReactNode }) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+export default function Layout({ lessons, children }: { lessons: Lesson[], children: ReactNode }) {
+  // const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
@@ -76,8 +67,10 @@ export default function Layout({ lessons, children }: { lessons: any, children: 
                 Lessons
               </MenuButton>
               <MenuList>
-                {lessons.map((lesson: lesson) => (
-                  <MenuItem key={lesson.path.replace('.mdx', '')}><a href={`/lessons/${lesson.path.replace('.mdx', '')}`}>{lesson.title}</a></MenuItem>
+                {lessons.map((lesson: Lesson) => (
+                  <MenuItem as={Link} href={`../lessons/${lesson.path.replace('.mdx', '')}`} key={lesson.path.replace('.mdx', '')}> 
+                    {lesson.title}
+                  </MenuItem>
                 ))}
 
               </MenuList>
