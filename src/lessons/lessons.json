@@ -32,6 +32,22 @@
       "description": "Fundamentals of LED control.",
       "file": "lesson3.mdx",
       "simCode": "lesson3.code.txt"
+    },
+    {
+      "lesson": 4,
+      "id": 4,
+      "title": "Lesson 4",
+      "description": "Serial Interface",
+      "file": "lesson4.mdx",
+      "simCode": "lesson4.code.txt"
+    },
+    {
+      "lesson": 5,
+      "id": 5,
+      "title": "Lesson 5",
+      "description": "Using Sensors",
+      "file": "lesson5.mdx",
+      "simCode": "lesson5.code.txt"
     }
   ]
 }
