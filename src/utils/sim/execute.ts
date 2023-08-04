@@ -8,7 +8,7 @@ import {
   AVRIOPort,
   portBConfig,
   portCConfig,
-  portDConfig
+  portDConfig,
 } from "avr8js";
 import { loadHex } from "./intelhex";
 
@@ -44,7 +44,7 @@ export class AVRRunner {
       this.cpu.tick();
       if (this.cpu.cycles % 500000 === 0) {
         callback(this.cpu);
-        await new Promise(resolve => setTimeout(resolve, 0));
+        await new Promise((resolve) => setTimeout(resolve, 0));
         if (AVRRunner.stopped) {
           break;
         }

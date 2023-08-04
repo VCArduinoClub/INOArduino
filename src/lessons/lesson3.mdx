@@ -9,10 +9,11 @@ Here, we will cover a few main topics you will need to be familiar with to code 
 
 ```arduino
 [type] [variable name] = [some value];
-int x = 4; 
+int x = 4;
 ```
 
 Notice that x is the name, 4 is the value. What is the type? The variable is an int, short for integer. So, it stores an integer value: 4. Here are some other data types:
+
 ```arduino
 // bool - holds a true or false value
 bool example = true;
@@ -22,18 +23,20 @@ double example = 1.0042;
 String hello = “Hi from the Arduino”;
 // Note: every line ends in a semicolon;
 ```
+
 This is a part of the syntax of the language, or the rules that allow us to correctly format our program; Think of it like how we need proper grammar to form valid sentences!
 
 What is a function? A function is code that is clumped together and outputs a value and denoted by a function name. Often, they need input to perform operations on. Here are some of the functions you will need to know:
+
 ```arduino
 digitalRead(pin) // Reads the value from a specified digital pin, either HIGH or LOW.
 val = digitalRead(7);
 
 digitalWrite(pin, value) // Write a HIGH or a LOW value to a digital pin.
-digitalWrite(2, HIGH);  // sets pin 2 to a 5 V voltage 
+digitalWrite(2, HIGH);  // sets pin 2 to a 5 V voltage
 
 pinMode(pin, mode) // mode can be INPUT or OUTPUT
-// If the pin has been configured as an OUTPUT with pinMode(), the pin will be able to output a positive voltage (5V). 
+// If the pin has been configured as an OUTPUT with pinMode(), the pin will be able to output a positive voltage (5V).
 // If the pin has been configured as an INPUT with pinMode(), the pin will be able to accept a positive voltage
 pinMode(13, OUTPUT); // sets pin #13 to output
 
@@ -48,7 +51,7 @@ pulseIn(pin, value, timeout) // Reads a pulse on a pin
 // Returns the length of the pulse in microseconds or gives up and returns 0 if no complete pulse was received within the timeout
 
 tone(pin, frequency, duration) // Generates a square wave of the specified frequency (and 50% duty cycle) on a pin
-// Can be connected to a buzzer 
+// Can be connected to a buzzer
 
 noTone(pin) // Stops the generation of a square wave triggered by tone(). Has no effect if no tone is being generated
 
@@ -56,12 +59,12 @@ delay(x) // Pauses program for x amount of time (in milliseconds)
 ```
 
 The arduino has two functions in a program, which you will see in your arduino IDE.
-`setup()`, and `loop()`. 
+`setup()`, and `loop()`.
 
 The `setup()` function will run first on the arduino, and this is the function in which you change pin modes or do things that only need to be done ONCE.
 
-The `loop()` function is where you write code that needs to be run continuously after the setup() function runs. This is where you read pin values, or in general do things that require reading/writing data. 
+The `loop()` function is where you write code that needs to be run continuously after the setup() function runs. This is where you read pin values, or in general do things that require reading/writing data.
 
-We strongly encourage InoArduino users to refer to the following link for a more comprehensive overview of arduino programming: 
+We strongly encourage InoArduino users to refer to the following link for a more comprehensive overview of arduino programming:
 
 [Link: InoArduino Reference](https://www.arduino.cc/reference/en/)
