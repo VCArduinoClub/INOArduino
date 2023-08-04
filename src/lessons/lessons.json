@@ -1,0 +1,37 @@
+{
+  "$schema": "https://raw.githubusercontent.com/VCArduinoClub/inoarduino-assets/main/lessons_indexv1.schema.json",
+  "lessons": [
+    {
+      "lesson": "INTRO",
+      "id": 0,
+      "title": "Introduction to INOArduino",
+      "description": "What is INOArduino?",
+      "file": "INTRO.mdx",
+      "simCode": null
+    },
+    {
+      "lesson": "1",
+      "id": 1,
+      "title": "Lesson 1",
+      "description": "All of the basics.",
+      "file": "lesson1.mdx",
+      "simCode": "lesson1.code.txt"
+    },
+    {
+      "lesson": 2,
+      "id": 2,
+      "title": "Lesson 2",
+      "description": "All about LEDs. ",
+      "file": "lesson2.mdx",
+      "simCode": "lesson2.code.txt"
+    },
+    {
+      "lesson": 3,
+      "id": 3,
+      "title": "Lesson 3",
+      "description": "Fundamentals of LED control.",
+      "file": "lesson3.mdx",
+      "simCode": "lesson3.code.txt"
+    }
+  ]
+}

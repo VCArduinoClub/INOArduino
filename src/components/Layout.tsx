@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 import {
   Box,
   Flex,
@@ -14,33 +14,36 @@ import {
   useColorModeValue,
   useColorMode,
   // Spacer
+} from "@chakra-ui/react";
 
-} from '@chakra-ui/react';
+import Syntaxh from "../styles/Syntaxh";
+import { MoonIcon, SunIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import type { Lesson } from "../utils/mdxUtils";
 
-
-
-import Syntaxh from '../styles/Syntaxh';
-import { MoonIcon, SunIcon, ChevronDownIcon } from '@chakra-ui/icons';
-import type { Lesson } from '../utils/mdxUtils';
-
-
-const Links = ['Dashboard', 'Simulator', 'Teams', 'Profile', 'Settings'];
+const Links = ["Dashboard", "Simulator", "Teams", "Profile", "Settings"];
 
 const NavLink = ({ children }: { children: ReactNode }) => (
   <Link
     px={2}
     py={1}
-    rounded={'md'}
+    rounded={"md"}
     _hover={{
-      textDecoration: 'none',
-      bg: useColorModeValue('gray.200', 'gray.700'),
+      textDecoration: "none",
+      bg: useColorModeValue("gray.200", "gray.700"),
     }}
-    href={'#'}>
+    href={"#"}
+  >
     {children}
   </Link>
 );
 
-export default function Layout({ lessons, children }: { lessons: Lesson[], children: ReactNode }) {
+export default function Layout({
+  lessons,
+  children,
+}: {
+  lessons: Lesson[];
+  children: ReactNode;
+}) {
   // const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -48,14 +51,15 @@ export default function Layout({ lessons, children }: { lessons: Lesson[], child
     <>
       <Syntaxh theme={colorMode} />
 
-      <Box position="fixed" w="100%" bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
-
-        <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-
-          <HStack spacing={8} alignItems={'center'}>
-
+      <Box
+        position="fixed"
+        w="100%"
+        bg={useColorModeValue("gray.100", "gray.900")}
+        px={4}
+      >
+        <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+          <HStack spacing={8} alignItems={"center"}>
             <Box>
-
               <Link href="/">
                 Home
                 {/* <HamburgerIcon /> */}
@@ -68,40 +72,36 @@ export default function Layout({ lessons, children }: { lessons: Lesson[], child
               </MenuButton>
               <MenuList>
                 {lessons.map((lesson: Lesson) => (
-                  <MenuItem as={Link} href={`../lessons/${lesson.path.replace('.mdx', '')}`} key={lesson.path.replace('.mdx', '')}> 
-                    {lesson.title}
+                  <MenuItem key={lesson.path.replace(".mdx", "")}>
+                    <a href={`/lessons/${lesson.path.replace(".mdx", "")}`}>
+                      {lesson.title}
+                    </a>
                   </MenuItem>
                 ))}
-
               </MenuList>
             </Menu>
-            <HStack
-              as={'nav'}
-              display={{ base: 'none', md: 'flex' }}>
+            <HStack as={"nav"} display={{ base: "none", md: "flex" }}>
               {Links.map((link) => (
                 <NavLink key={link}>{link}</NavLink>
               ))}
             </HStack>
-
           </HStack>
 
-          <Flex alignItems={'center'}>
+          <Flex alignItems={"center"}>
             <Box px={2}>
               <Button onClick={toggleColorMode}>
-                {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+                {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
               </Button>
             </Box>
             <Menu>
-
               <MenuButton
                 as={Button}
-                rounded={'full'}
-                variant={'link'}
-                cursor={'pointer'}
-                minW={0}>
-                <Avatar
-                  size={'sm'}
-                />
+                rounded={"full"}
+                variant={"link"}
+                cursor={"pointer"}
+                minW={0}
+              >
+                <Avatar size={"sm"} />
               </MenuButton>
               <MenuList>
                 <MenuItem>Sign In</MenuItem>
@@ -112,12 +112,9 @@ export default function Layout({ lessons, children }: { lessons: Lesson[], child
             </Menu>
           </Flex>
         </Flex>
-
-
       </Box>
 
       <Box p={20}>{children}</Box>
     </>
   );
 }
-

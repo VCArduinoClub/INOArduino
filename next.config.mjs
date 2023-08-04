@@ -15,7 +15,22 @@ const config = {
     defaultLocale: "en",
   },
   eslint: {
-    ignoreDuringBuilds: true // BYPASSES LINT!
-  }
+    ignoreDuringBuilds: true, // BYPASSES LINT!
+  },
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    config.module.rules.push({
+      test: /\.code.txt$/i,
+      loader: "raw-loader",
+      // use: [
+      //   {
+      //     loader: "raw-loader",
+      //     options: {
+      //       esModule: false,
+      //     },
+      //   },
+      // ],
+    });
+    return config;
+  },
 };
 export default config;
