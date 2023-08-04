@@ -1,10 +1,9 @@
 ---
-title: 'Lesson 1'
-description: 'All of the basics'
+title: "Lesson 1"
+description: "All of the basics"
 ---
 
 What you will learn:
-
 
 - What is an Arduino?
 - How do you use one?
@@ -17,11 +16,12 @@ What you will learn:
 - C++ code, what is this?
 - What is `Serial.println()`?
 - You will make your own "hello world" code with the Arduino at the end.
-<br></br>
+  <br></br>
 
 ## Lesson
 
 The arduino is a tiny computer that takes instructions from your computer and sends them to devices you connect to the Arduino. You can connect many types of devices to an arduino, including LEDs, sensors, and input devices such as buttons. You can even attach an LED screen to display things!
+
 <br></br>
 
 #### Pins/Components
@@ -30,25 +30,28 @@ There are many different Arduino boards, but we are focused on the Arduino UNO, 
 
 <img width="500" alt="arduino img" src="/images/arduino_pins.jpg" />
 
-The analog pins are for analog input, which ranges from 0-5 V. This is different from the digital pins, on the right side of the board in the schematic above, which only have a HIGH and LOW signal (0 OR 5 V). 
+The analog pins are for analog input, which ranges from 0-5 V. This is different from the digital pins, on the right side of the board in the schematic above, which only have a HIGH and LOW signal (0 OR 5 V).
+
 <img width="500" alt="arduino img" src="/images/AnalogDigitalExplain.png" />
-PWM pins are a special type of digital pin. They are essentially a digital pin that can simulate an analog output — in other words, an output between 0 and 5 V. They do this through a PWM wave, which has a certain cycle that averages to a certain voltage.  
+PWM pins are a special type of digital pin. They are essentially a digital pin that
+can simulate an analog output — in other words, an output between 0 and 5 V. They
+do this through a PWM wave, which has a certain cycle that averages to a certain
+voltage.
 <br />
-The arduino also has power pins. A 5V pin provides power and a GND pin provides a reference voltage for that power source. 
+The arduino also has power pins. A 5V pin provides power and a GND pin provides a
+reference voltage for that power source.{" "}
 
 <br></br>
 
-####  What is code?
-
+#### What is code?
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Code is a set of instructions you give to a computer in order to accomplish a task. In our case, the computer is the arduino. For Arduino, you will naturally pick up the C++ language along the way because a lot of the language is explained through the Arduino functionality and how the code is written.
-
 
 <br></br>
 
 #### What is a breadboard?
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Breadboards allow to easily connect components on a circuit. Both the ground and power rails are electrically connected horizontally down the breadboard as seen by the red and blue lines. This means that anything connected to a power rail (ie. 5V) can be shared by anything on that rail. The circuit rails are electrically connected vertically. 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Breadboards allow to easily connect components on a circuit. Both the ground and power rails are electrically connected horizontally down the breadboard as seen by the red and blue lines. This means that anything connected to a power rail (ie. 5V) can be shared by anything on that rail. The circuit rails are electrically connected vertically.
 
 <img width="500" alt="arduino img" src="/images/breadboard.png" />
 <br></br>
@@ -56,6 +59,7 @@ The arduino also has power pins. A 5V pin provides power and a GND pin provides 
 #### Hands On:
 
 Make sure you connect your Arduino to your computer using the USB-B cable, which is typically blue. Be sure to select the board in the IDE as the Arduino UNO.
+
 <br></br>
 **Note:** To select the board, go to `Tools->Board->Arduino AVR Boards`, and find the Arduino UNO option.
 <br></br>
@@ -78,8 +82,7 @@ void loop () {
     delay (1000);
 }
 ```
+[Open in simulator](/sim?lesson=1)
 <br></br>
 
-
-
-How do you run the code? Just click the right arrow button on the top left of the IDE! 
+How do you run the code? Just click the right arrow button on the top left of the IDE!
