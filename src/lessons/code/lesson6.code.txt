@@ -4,7 +4,7 @@
         Servo servo;
 
 
-        #define echo Pin 2//D2 pinconnects to ECHO
+        #define echoPin 2//D2 pinconnects to ECHO
         #define trigPin 3//D3 pinconnects to TRIG
         #define servoPin 9//D9 pinconnects to the servo input
 
@@ -12,7 +12,7 @@
         int distance; // distance measurement
         unsigned int servoPosition = 0;
 
-        void setup() f
+        void setup() {
           // setup ultrasonic pins 
           pinMode(trigPin, OUTPUT); 
           pinMode(echoPin, INPUT); 

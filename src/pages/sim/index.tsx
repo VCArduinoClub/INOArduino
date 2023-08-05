@@ -3,7 +3,7 @@ import Layout from "../../components/Layout";
 import { useState, useRef, useEffect, ChangeEventHandler } from "react";
 import { buildHex } from "../../utils/sim/compile";
 import { AVRRunner } from "../../utils/sim/execute";
-import { LEDElement } from "@wokwi/elements";
+import { LEDElement, ServoElement } from "@wokwi/elements";
 import {
   Alert,
   AlertDescription,
@@ -38,6 +38,7 @@ enum ArduinoSimState {
 
 const SimPage = () => {
   const [lessonsmenu, setLessons] = useState([]);
+
   useEffect(() => {
     let lessonsarr: any = [];
     LessonData.lessons.map((lesson: any) => {
@@ -93,6 +94,7 @@ const ArduinoSim = () => {
     ArduinoSimState.NOTHING
   );
   const [currentLesson, setCurrentLesson] = useState("");
+  const [elements, setElements] = useState<string[]>([]);
 
   const textAreaMultiplier = 1; // Set the textarea height to the number of lines
   const textAreaHeight =
@@ -223,13 +225,17 @@ const ArduinoSim = () => {
       console.group("[InoArduino] Simulator::SelectLesson");
       // Load the lesson code
       console.debug(`Loading lesson code: ~/lessons/code/${lesson.simCode}`);
-      if (lesson.simCode === null) {
+      if (!lesson.hasOwnProperty("simCode")) {
         setArduinoCode(
           `// This lesson does not have any code. Please select another lesson.`
         );
         console.log("User requested lesson with no code");
         console.groupEnd();
         return;
+      }
+      if (lesson.element != "null") {
+        const elem = [...elements, lesson.element]
+        setElements(elem)
       }
       import("/src/lessons/code/" + lesson.simCode)
         .then((code) => {
@@ -311,6 +317,7 @@ const ArduinoSim = () => {
       <Text as="b" fontSize="xl">
         Arduino Simulator
       </Text>
+      
       <Stack direction="row">
         <Button onClick={runCode} isLoading={isRunning}>
           Run
