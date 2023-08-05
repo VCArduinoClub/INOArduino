@@ -61,7 +61,12 @@ const components = {
   AlertTitle,
   AlertDescription,
   Head,
-  KeyConcept
+  KeyConcept,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
 }
 
 export default function PostPage({ source, frontMatter, lessons }: { source: any, frontMatter: { title: string, description: string }, lessons: any }): JSX.Element {
