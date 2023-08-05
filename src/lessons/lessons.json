@@ -48,6 +48,14 @@
       "description": "Using Sensors",
       "file": "lesson5.mdx",
       "simCode": "lesson5.code.txt"
+    },
+    {
+      "lesson": 6,
+      "id": 6,
+      "title": "Lesson 6",
+      "description": "Challenge Project",
+      "file": "lesson6.mdx",
+      "simCode": "lesson6.code.txt"
     }
   ]
 }
