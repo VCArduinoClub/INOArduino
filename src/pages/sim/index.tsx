@@ -21,6 +21,7 @@ import {
 } from "@chakra-ui/react";
 import Editor, { Monaco } from "@monaco-editor/react";
 import LessonData from "../../lessons/lessons.json";
+import { set } from "zod";
 
 enum ArduinoSimState {
   NOTHING = "Arduino is not running",
@@ -36,12 +37,24 @@ enum ArduinoSimState {
 }
 
 const SimPage = () => {
+  const [lessonsmenu, setLessons] = useState([]);
+  useEffect(() => {
+    let lessonsarr: any = [];
+    LessonData.lessons.map((lesson: any) => {
+      [lessonsarr.push({
+        path: `/lessons/${lesson.file}`,
+        title: lesson.title,
+      })]
+    })
+    setLessons(lessonsarr)
+  }, []);
+
   console.log(
     "[InoArduino] Simulator dumps to console a lot - disable Debug in console to hide"
   );
 
   return (
-    <Layout lessons={[]}>
+    <Layout lessons={lessonsmenu}>
       <ArduinoSim />
     </Layout>
   );
