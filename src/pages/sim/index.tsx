@@ -3,7 +3,7 @@ import Layout from "../../components/Layout";
 import { useState, useRef, useEffect, ChangeEventHandler } from "react";
 import { buildHex } from "../../utils/sim/compile";
 import { AVRRunner } from "../../utils/sim/execute";
-import { LEDElement, ServoElement } from "@wokwi/elements";
+
 import {
   Alert,
   AlertDescription,
@@ -21,7 +21,6 @@ import {
 } from "@chakra-ui/react";
 import Editor, { Monaco } from "@monaco-editor/react";
 import LessonData from "../../lessons/lessons.json";
-import { set } from "zod";
 
 enum ArduinoSimState {
   NOTHING = "Arduino is not running",
@@ -36,9 +35,27 @@ enum ArduinoSimState {
   SIMULATORCORE_ERROR = "Error in AVRRunner: Check console",
 }
 
+function EditorElement({ children } : {children : any | undefined}) {
+  return (
+    <span style={{ position: "relative", display: "inline-block" }}>
+      {children}
+      <div
+        style={{ position: "absolute", top: 0, left: 0, bottom: 0, right: 0 }}
+        className="overlay"
+      />
+      <style jsx>{`
+        .overlay:hover {
+          outline: solid red 1px;
+        }
+      `}</style>
+    </span>
+  );
+}
+
+let wowki = undefined
+
 const SimPage = () => {
   const [lessonsmenu, setLessons] = useState([]);
-
   useEffect(() => {
     let lessonsarr: any = [];
     LessonData.lessons.map((lesson: any) => {
@@ -46,7 +63,14 @@ const SimPage = () => {
         path: `/lessons/${lesson.file}`,
         title: lesson.title,
       })]
-    })
+    });
+
+    (async () => { 
+      wowki = await import("@wokwi/elements");
+    })().then(() => {
+      console.log("[InoArduino] wowki loaded in");
+    });
+
     setLessons(lessonsarr)
   }, []);
 
@@ -102,6 +126,10 @@ const ArduinoSim = () => {
   const toast = useToast();
   const editorRef = useRef(null);
   let runner: AVRRunner;
+  // const elemKeys = {
+  //   "led": <wowki-led />,
+  //   "servo": <wowki-servo />
+  // }
 
   useEffect(
     function () {
@@ -311,9 +339,10 @@ const ArduinoSim = () => {
     setSimState(ArduinoSimState.STOPPED);
   }
 
-  return (
+  return ( 
+    <>
     <Stack direction="column" spacing={4}>
-      {/* <> */}
+    {/* <> */}
       <Text as="b" fontSize="xl">
         Arduino Simulator
       </Text>
@@ -399,6 +428,7 @@ const ArduinoSim = () => {
         </Card>
       </Stack>
     </Stack>
+    </>
   );
 };
 
