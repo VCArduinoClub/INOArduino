@@ -1,0 +1,75 @@
+---
+title: "Lesson 3"
+description: "Fundamentals of Arduino Coding"
+---
+
+# Fundamentals of Arduino Coding
+
+Here, we will cover a few main topics you will need to be familiar with to code the arduino. We covered what code was in the previous section: basically a set of instructions for a computer. Now, we will cover some key coding concepts and things you should know specifically for the Arduino! What are variables in programming? They are pretty much the same thing as variables in your algebra class, except variables need a type. A type is what kind of data that variable stores. For the arduino, a variable is declared as the following:
+
+```arduino
+[type] [variable name] = [some value];
+int x = 4;
+```
+
+[Open in simulator](/sim?lesson=3)
+Notice that x is the name, 4 is the value. What is the type? The variable is an int, short for integer. So, it stores an integer value: 4. Here are some other data types:
+
+```arduino
+// bool - holds a true or false value
+bool example = true;
+// double - holds a decimal value
+double example = 1.0042;
+// String - holds a set of characters
+String hello = “Hi from the Arduino”;
+// Note: every line ends in a semicolon;
+```
+
+[Open in simulator](/sim?lesson=3)
+
+This is a part of the syntax of the language, or the rules that allow us to correctly format our program; Think of it like how we need proper grammar to form valid sentences!
+
+What is a function? A function is code that is clumped together and outputs a value and denoted by a function name. Often, they need input to perform operations on. Here are some of the functions you will need to know:
+
+```arduino
+digitalRead(pin) // Reads the value from a specified digital pin, either HIGH or LOW.
+val = digitalRead(7);
+
+digitalWrite(pin, value) // Write a HIGH or a LOW value to a digital pin.
+digitalWrite(2, HIGH);  // sets pin 2 to a 5 V voltage
+
+pinMode(pin, mode) // mode can be INPUT or OUTPUT
+// If the pin has been configured as an OUTPUT with pinMode(), the pin will be able to output a positive voltage (5V).
+// If the pin has been configured as an INPUT with pinMode(), the pin will be able to accept a positive voltage
+pinMode(13, OUTPUT); // sets pin #13 to output
+
+analogRead(pin) // Reads the value from the specified analog pin.
+// If the analog input pin is not connected to anything, the value returned will fluctuate based on a number of factors (e.g. the values of the other analog inputs, how close your hand is to the board, etc.)
+
+analogWrite(pin, value) // Writes an analog value (PWM wave) to a pin
+// After a call to analogWrite(), the pin will generate a steady rectangular wave of the specified duty cycle until the next call to analogWrite() (or a call to digitalRead() or digitalWrite()) on the same pin.
+// Value is the duty cycle between 0 (always off) and 255 (always on) (int only)
+
+pulseIn(pin, value, timeout) // Reads a pulse on a pin
+// Returns the length of the pulse in microseconds or gives up and returns 0 if no complete pulse was received within the timeout
+
+tone(pin, frequency, duration) // Generates a square wave of the specified frequency (and 50% duty cycle) on a pin
+// Can be connected to a buzzer
+
+noTone(pin) // Stops the generation of a square wave triggered by tone(). Has no effect if no tone is being generated
+
+delay(x) // Pauses program for x amount of time (in milliseconds)
+```
+
+[Open in simulator](/sim?lesson=3)
+
+The arduino has two functions in a program, which you will see in your arduino IDE.
+`setup()`, and `loop()`.
+
+The `setup()` function will run first on the arduino, and this is the function in which you change pin modes or do things that only need to be done ONCE.
+
+The `loop()` function is where you write code that needs to be run continuously after the setup() function runs. This is where you read pin values, or in general do things that require reading/writing data.
+
+We strongly encourage InoArduino users to refer to the following link for a more comprehensive overview of arduino programming:
+
+[Link: InoArduino Reference](https://www.arduino.cc/reference/en/)

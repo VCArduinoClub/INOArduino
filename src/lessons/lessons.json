@@ -1,0 +1,68 @@
+{
+  "$schema": "https://raw.githubusercontent.com/VCArduinoClub/inoarduino-assets/main/lessons_indexv1.schema.json",
+  "lessons": [
+    {
+      "lesson": "INTRO",
+      "id": 0,
+      "title": "Introduction to InoArduino",
+      "description": "What is InoArduino?",
+      "file": "INTRO.mdx",
+      "element": "null"
+    },
+    {
+      "lesson": "1",
+      "id": 1,
+      "title": "Lesson 1",
+      "description": "All of the basics.",
+      "file": "lesson1.mdx",
+      "simCode": "lesson1.code.txt", 
+      "element": "null"
+
+    },
+    {
+      "lesson": "2",
+      "id": 2,
+      "title": "Lesson 2",
+      "description": "All about LEDs. ",
+      "file": "lesson2.mdx",
+      "simCode": "lesson2.code.txt",
+      "element": "led"
+    },
+    {
+      "lesson": "3",
+      "id": 3,
+      "title": "Lesson 3",
+      "description": "Fundamentals of LED control.",
+      "file": "lesson3.mdx",
+      "simCode": "lesson3.code.txt",
+      "element": "null"
+    },
+    {
+      "lesson": "4",
+      "id": 4,
+      "title": "Lesson 4",
+      "description": "Serial Interface",
+      "file": "lesson4.mdx",
+      "simCode": "lesson4.code.txt",
+      "element": "null"
+    },
+    {
+      "lesson": "5",
+      "id": 5,
+      "title": "Lesson 5",
+      "description": "Using Sensors",
+      "file": "lesson5.mdx",
+      "simCode": "lesson5.code.txt",
+      "element": "null"
+    },
+    {
+      "lesson": "6",
+      "id": 6,
+      "title": "Lesson 6",
+      "description": "Challenge Project",
+      "file": "lesson6.mdx",
+      "simCode": "lesson6.code.txt",
+      "element": "servo"
+    }
+  ]
+}

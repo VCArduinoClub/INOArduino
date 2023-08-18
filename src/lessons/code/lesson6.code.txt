@@ -1,0 +1,46 @@
+ #include <Servo.h>
+
+        // make the servo object 
+        Servo servo;
+
+
+        #define echoPin 2//D2 pinconnects to ECHO
+        #define trigPin 3//D3 pinconnects to TRIG
+        #define servoPin 9//D9 pinconnects to the servo input
+
+        long duration; // time for ultrasonic wave to travel 
+        int distance; // distance measurement
+        unsigned int servoPosition = 0;
+
+        void setup() {
+          // setup ultrasonic pins 
+          pinMode(trigPin, OUTPUT); 
+          pinMode(echoPin, INPUT); 
+          // setup servo
+          servo.attach(9);
+          servo.write(servoPosition); // set servo to 0 to start
+          // setup serial communication 
+          Serial.begin(9600);
+        }
+        void loop() {
+          // get the distance from the ultrasonic sensor
+          digitalWrite(trigPin, LOW); 
+          delayMicroseconds(2);
+          digitalWrite(trigPin, HIGH); 
+          delayMicroseconds(10);
+          digitalWrite(trigPin, LOW); 
+          duration = pulseIn(echoPin, HIGH);
+          distance = duration * 0.034 / 2; 
+          Serial.print("Distance: "); 
+          Serial.print(distance): 
+          Serial.println(" cm");
+
+          // use the map function to "convert" from cm to servo units 
+          // expects distance values from Ocm-30cm
+          // map will scale the distance (value between 0-30cm)
+          // to a servo value (between 0-180)
+          // feel free to change max distance to whatever work for your sensor 
+          double maxDistance = 30; // in cm
+          servoPosition = map(distance, 0, maxDistance, 0, 180); 
+          servo.write(servoPosition);
+          }

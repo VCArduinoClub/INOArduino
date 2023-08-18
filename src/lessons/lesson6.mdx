@@ -1,0 +1,98 @@
+---
+title: "Lesson 6"
+description: "Challenge Project: Ultrasonic Sensor"
+---
+
+
+
+#### What is PWM? 
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PWM is how a digital pin can simulate analog output: this can be useful for setting an LED to something in the middle of off and full brightness<br/>
+See the slide below:
+
+![PWM image](../images/PWMExplain.png)
+
+<br/><br/>  
+We can use PWM to do several things, but in this project we’ll use it to control a servo proportional to an ultrasonic sensor’s readings. 
+
+<br/>
+This is a **CHALLENGE** project, so you’ll be doing a majority of the coding and wiring for this project! We’ll give you a couple of hints and tips, but ultimately, executing the project is all up to you and your comprehension of the previous lessons. 
+
+So what is the task?
+  - We want you to design code that rotates a servo proportionally to the distance your hand is from an ultrasonic sensor. Refer to the code in the previous lesson for the ultrasonic sensor. 
+
+  - We want you to do some of your own research on the Servo library that arduino provides, which is basically code that is already made which you can use to control a servo motor. 
+
+  - Servo library reference: *[https://www.arduino.cc/reference/en/libraries/servo/](https://www.arduino.cc/reference/en/libraries/servo/)*
+
+  - Hint, you will need to use the `map()` function to convert the distance from the sensor to a rotational input to the servo, refer to *[this](https://www.arduino.cc/reference/en/language/functions/math/map/)*
+
+
+<br/><br/><br/><br/><br/>
+<Accordion  allowMultiple >
+  <AccordionItem >
+    <h2 maxw={"30%"}>
+      <AccordionButton>
+          Answer
+        <AccordionIcon />
+      </AccordionButton>
+    </h2>
+    <AccordionPanel pb={4}>
+
+      ``` arduino
+
+      #include <Servo.h>
+
+        // make the servo object 
+        Servo servo;
+
+
+        #define echo Pin 2//D2 pinconnects to ECHO
+        #define trigPin 3//D3 pinconnects to TRIG
+        #define servoPin 9//D9 pinconnects to the servo input
+
+        long duration; // time for ultrasonic wave to travel 
+        int distance; // distance measurement
+        unsigned int servoPosition = 0;
+
+        void setup() {
+          // setup ultrasonic pins 
+          pinMode(trigPin, OUTPUT); 
+          pinMode(echoPin, INPUT); 
+          // setup servo
+          servo.attach(9);
+          servo.write(servoPosition); // set servo to 0 to start
+          // setup serial communication 
+          Serial.begin(9600);
+        }
+        void loop() {
+          // get the distance from the ultrasonic sensor
+          digitalWrite(trigPin, LOW); 
+          delayMicroseconds(2);
+          digitalWrite(trigPin, HIGH); 
+          delayMicroseconds(10);
+          digitalWrite(trigPin, LOW); 
+          duration = pulseIn(echoPin, HIGH);
+          distance = duration * 0.034 / 2; 
+          Serial.print("Distance: "); 
+          Serial.print(distance): 
+          Serial.println(" cm");
+
+          // use the map function to "convert" from cm to servo units 
+          // expects distance values from Ocm-30cm
+          // map will scale the distance (value between 0-30cm)
+          // to a servo value (between 0-180)
+          // feel free to change max distance to whatever work for your sensor 
+          double maxDistance = 30; // in cm
+          servoPosition = map(distance, 0, maxDistance, 0, 180); 
+          servo.write(servoPosition);
+          }
+
+
+      
+      ```
+    </AccordionPanel>
+  </AccordionItem>
+
+
+</Accordion>

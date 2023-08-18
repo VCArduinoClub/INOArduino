@@ -3,14 +3,17 @@ import matter from 'gray-matter'
 import { MDXRemote } from 'next-mdx-remote'
 import rehypeHighlight from "rehype-highlight";
 import { serialize } from 'next-mdx-remote/serialize'
-import dynamic from 'next/dynamic'
 import React from 'react';
 import Head from 'next/head'
-import { useEffect } from 'react';
 import path from 'path'
-import { Link, Heading, Text, Alert, useColorModeValue, AlertIcon, AlertTitle, AlertDescription, ListItem, UnorderedList, OrderedList, Divider, Code, Box } from "@chakra-ui/react";
+import { Link, Heading, Text, Alert, useColorModeValue, AlertIcon, AlertTitle, AlertDescription, ListItem, UnorderedList, OrderedList, Divider, Code, Box, Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon } from "@chakra-ui/react";
 import Layout from '../../components/Layout'
 import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils'
+import KeyConcept from '../../components/KeyConcept';
 // import hljs from 'highlight.js';
 import langArduino from 'highlight.js/lib/languages/arduino'
 
@@ -58,6 +61,12 @@ const components = {
   AlertTitle,
   AlertDescription,
   Head,
+  KeyConcept,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
 }
 
 export default function PostPage({ source, frontMatter, lessons }: { source: any, frontMatter: { title: string, description: string }, lessons: any }): JSX.Element {
