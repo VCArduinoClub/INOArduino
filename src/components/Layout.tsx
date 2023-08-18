@@ -20,7 +20,7 @@ import Syntaxh from "../styles/Syntaxh";
 import { MoonIcon, SunIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import type { Lesson } from "../utils/mdxUtils";
 
-const Links = ["Dashboard", "Simulator", "Teams", "Profile", "Settings"];
+const Links = [""];
 
 const NavLink = ({ children }: { children: ReactNode }) => (
   <Link
